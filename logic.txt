@@ -1,0 +1,9 @@
+Logic of signup/login/logout:
+
+server opens
+user opens html/css/js page of signup/login
+user inputs signup (a POST request) or login(GET request)
+sends HTTP data over to server
+checking happens
+server sends stuff back, whether signup/login worked or not
+if signup/login works, server leads them to link of their homepage (e.g. "www.somethinghere.com/dashboard") as well as sending some html/css
