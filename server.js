@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const config = require('./config');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 const {router: authRouter} = require('./router/authentication');
 
 const app = express();
@@ -26,6 +27,13 @@ app.use(express.static('public'));
 app.use(authRouter);
 
 // No need for hostname yet
-app.listen(config.PORT, function() {
-    console.log(`Listening on ${config.PORT}`);
+mongoose.connect(config.DATABASE_URL, function(err) {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        app.listen(config.PORT, function() {
+            console.log(`Listening on ${config.PORT}`);
+        });
+    }
 });
