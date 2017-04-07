@@ -17,7 +17,13 @@ router.post('/signup', formParser, function(req, res) {
         res.json(`User ${user.id} created.`);
     })
     .catch(function(err) {
-        console.log(err);
+        if (err.code === 11000) {
+            res.status(400).send(`There's already a user with that name.`);
+        }
+        else {
+            console.log(err);
+            res.sendStatus(500);
+        }
     });
 });
 
