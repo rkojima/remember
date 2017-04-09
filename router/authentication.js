@@ -8,6 +8,10 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded();
 
 router.post('/signup', formParser, function(req, res) {
+    if(req.body.psw != req.body['psw-repeat']) {
+        return res.send("Passwords do not match");
+    }
+
     User.create({
         email: req.body.email,
         username: req.body.username,
