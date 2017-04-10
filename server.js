@@ -7,7 +7,7 @@ const {router: authRouter} = require('./router/authentication');
 
 const app = express();
 const formParser = bodyParser.urlencoded();
-// So that I could parse the req.body and what not. Else it will be raw and hideous.
+// So that I could parse the req.body and what not. Else will be raw and hideous.
 
 /* app.use(function(req, res, next) {
     console.log(req.path);

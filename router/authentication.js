@@ -1,4 +1,4 @@
-// For signup, login, logout
+// A router for signup, login, logout
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -7,6 +7,7 @@ const {User} = require('../models/user');
 const router = express.Router();
 const formParser = bodyParser.urlencoded();
 
+// A route when signing up
 router.post('/signup', formParser, function(req, res) {
     if(req.body.psw != req.body['psw-repeat']) {
         return res.send("Passwords do not match");
@@ -30,5 +31,8 @@ router.post('/signup', formParser, function(req, res) {
         }
     });
 });
+
+// A route when logging in
+
 
 module.exports = {router};
