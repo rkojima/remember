@@ -1,3 +1,5 @@
+// A model
+
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
@@ -6,8 +8,7 @@ mongoose.Promise = global.Promise;
 const UserSchema = mongoose.Schema({
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     username: {
         type: String,
