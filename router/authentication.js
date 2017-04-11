@@ -3,9 +3,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {User} = require('../models/user');
+const passport = require('passport');
+const {BasicStrategy} = require('passport-http');
 
 const router = express.Router();
 const formParser = bodyParser.urlencoded();
+
+// Before using passport, configure strategy first
+/*const basicStrategy = new BasicStrategy (function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+});
+passport.use(basicStrategy);
+router.use(passport.initialize());*/
 
 // A route when signing up
 router.post('/signup', formParser, function(req, res) {
@@ -33,6 +47,8 @@ router.post('/signup', formParser, function(req, res) {
 });
 
 // A route when logging in
-
+router.post('/login', /*passport.authenticate('basic', {session: false}),*/ function(req, res) {
+    return res.send('ok');
+});
 
 module.exports = {router};
