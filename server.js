@@ -7,6 +7,7 @@ const {router: authRouter} = require('./router/authentication');
 
 const app = express();
 const formParser = bodyParser.urlencoded();
+const session = require('express-session');
 // So that I could parse the req.body and what not. Else will be raw and hideous.
 
 /* app.use(function(req, res, next) {
@@ -19,10 +20,12 @@ const formParser = bodyParser.urlencoded();
 app.use(morgan('dev')); // Makes it easier to develop
 // Morgan is first so that we see all actions done
 
-
-
 // Exposing static files (files that client should see) 
 app.use(express.static('public'));
+
+app.use(session({
+    secret: 'What is this cat',
+}));
 
 app.use(authRouter);
 
