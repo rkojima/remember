@@ -40,3 +40,6 @@ mongoose.connect(config.DATABASE_URL, function(err) {
         });
     }
 });
+
+// May need to add runServer and closeServer 
+module.exports = {app};
