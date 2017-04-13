@@ -100,6 +100,15 @@ const loginMiddleware = passport.authenticate('local', {
         successRedirect: '/', // TODO change this to dashboard
         failureRedirect: '/login'
     });
+
+router.get('/signup', function(req, res) {
+    res.render('signup', {title: "Sign Up!"});
+});
+
+router.get('/login', function(req, res) {
+    res.render('index', {title: "Hello!"});
+});
+
 // Made sure that info from form was coming in through post
 router.post('/login', formParser, loginMiddleware);
 

@@ -6,6 +6,10 @@ const mongoose = require('mongoose');
 const {router: authRouter} = require('./router/authentication');
 
 const app = express();
+app.set('views', './views');
+app.set('view engine', 'hbs');
+// Look for views if code ever asks, in views folder.
+// Render views using handlebars. 
 const formParser = bodyParser.urlencoded();
 const session = require('express-session');
 // So that I could parse the req.body and what not. Else will be raw and hideous.
