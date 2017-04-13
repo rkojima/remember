@@ -110,7 +110,7 @@ router.get('/dashboard', passport.authenticate('local', {session: false}), funct
 
 router.get('/logout', function(req, res) {
     req.logOut();
-    res.redirect('/login'); // Placeholder for now
+    res.redirect('/'); // Placeholder for now
 });
 
 module.exports = {router};
