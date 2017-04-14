@@ -4,6 +4,7 @@ const config = require('./config');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const {router: authRouter} = require('./router/authentication');
+const {router: creationRouter} = require('./router/createBook');
 
 const app = express();
 app.set('views', './views');
@@ -32,6 +33,7 @@ app.use(session({
 }));
 
 app.use(authRouter);
+app.use(creationRouter);
 
 // No need for hostname yet
 mongoose.connect(config.DATABASE_URL, function(err) {
