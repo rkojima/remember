@@ -18,7 +18,10 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    library: [
+        {type: mongoose.Schema.Types.ObjectId, ref: 'book'}
+    ]
 });
 
 UserSchema.methods.apiRepr  = function() {
