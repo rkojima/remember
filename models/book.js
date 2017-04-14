@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const bookSchema = mongoose.Schema({
-    bookTitle: {
+    title: {
         type: String,
     },
     pages: {
