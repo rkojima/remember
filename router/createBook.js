@@ -19,4 +19,15 @@ router.post('/create-book', formParser, function(req, res) {
     });
 });
 
+router.get('/book/:id', function(req, res) {
+    Book.findById(req.params.id)
+    .then(function(book) {
+        res.render("book", {title: book.title, book: book});
+    })
+    .catch(function(err) {
+        res.sendStatus(404);
+    });
+    // Give proper message later
+});
+
 module.exports = {router};
