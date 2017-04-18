@@ -1,36 +1,48 @@
-const bodyParser = require('body-parser');
 const express = require('express');
-const config = require('./config');
-const morgan = require('morgan');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+
+const config = require('./config');
 const {router: authRouter} = require('./router/authentication');
 const {router: creationRouter} = require('./router/createBook');
 
 const app = express();
+
+// Look for views if code ever asks, in views folder.
+// Render views using handlebars.
 app.set('views', './views');
 app.set('view engine', 'hbs');
-// Look for views if code ever asks, in views folder.
-// Render views using handlebars. 
-const formParser = bodyParser.urlencoded();
-const session = require('express-session');
+
+const formParser = bodyParser.urlencoded({extended: true});
+
 // So that I could parse the req.body and what not. Else will be raw and hideous.
+
+// This is basically what Morgan does
 
 /* app.use(function(req, res, next) {
     console.log(req.path);
     console.log(req.method);
     next();
 }); */
-// This is basically what's in Morgan
 
-app.use(morgan('dev')); // Makes it easier to develop
 // Morgan is first so that we see all actions done
+app.use(morgan('dev')); // Makes it easier to develop
 
 // Exposing static files (files that client should see) 
 app.use(express.static('public'));
 
+// Define a cookie-based session for the whole app.
 app.use(session({
     secret: 'What is this cat',
+    resave: true,
+    saveUninitialized: false
 }));
+
+// Initialize passport for the whole app
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(authRouter);
 app.use(creationRouter);

@@ -24,6 +24,11 @@ const UserSchema = mongoose.Schema({
     ]
 });
 
+UserSchema.pre('save', function(next){
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
+
 UserSchema.methods.apiRepr  = function() {
     return {
         username: this.username || '',
@@ -32,7 +37,8 @@ UserSchema.methods.apiRepr  = function() {
 };
 
 UserSchema.methods.validatePassword = function(password) {
-    return bcrypt.compare(password, this.password);
+    return bcrypt.compareSync(password, this.password);
+
 };
 
 UserSchema.statics.hashPassword = function(password) {

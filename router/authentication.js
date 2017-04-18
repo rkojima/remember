@@ -7,7 +7,7 @@ const passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy;
 
 const router = express.Router();
-const formParser = bodyParser.urlencoded();
+const formParser = bodyParser.urlencoded({extended: true});
 
 // Before using passport, configure strategy first
 
@@ -31,17 +31,11 @@ const formParser = bodyParser.urlencoded();
 passport.use(basicStrategy);
 */
 
-router.use(passport.initialize());
-router.use(passport.session());
-
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'psw'
 },
-  function(username, password, done) {
-    console.log(`Username: ${username}`);
-        console.log(`Password: ${password}`);
-        console.log('Here');
+function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
@@ -60,8 +54,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-    console.log(User);
-  User.findById(user.id, function(err, user) {
+    User.findById(user, function(err, user) {
     done(err, user);
   });
 });
@@ -97,7 +90,7 @@ router.post('/signup', formParser, function(req, res) {
 
 // A route when logging in
 const loginMiddleware = passport.authenticate('local', {
-        successRedirect: '/', // TODO change this to dashboard
+        successRedirect: '/dashboard', // TODO change this to dashboard
         failureRedirect: '/login'
     });
 
@@ -113,7 +106,8 @@ router.get('/login', function(req, res) {
 router.post('/login', formParser, loginMiddleware);
 
 // Menu, where they see their books and notes
-router.get('/dashboard', passport.authenticate('local', {session: false}), function(req, res) {
+router.get('/dashboard', function(req, res) {
+    console.log(req.user);
     res.json({user: req.user.apiRepr()});
 });
 
