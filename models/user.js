@@ -38,7 +38,6 @@ UserSchema.methods.apiRepr  = function() {
 
 UserSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.password);
-
 };
 
 const User = mongoose.model('User', UserSchema);

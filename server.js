@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -15,8 +14,6 @@ const app = express();
 // Render views using handlebars.
 app.set('views', './views');
 app.set('view engine', 'hbs');
-
-const formParser = bodyParser.urlencoded({extended: true});
 
 // So that I could parse the req.body and what not. Else will be raw and hideous.
 

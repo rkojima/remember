@@ -10,6 +10,7 @@ router.get('/create-book', function(req, res) {
 });
 
 router.post('/create-book', formParser, function(req, res) {
+    console.log(req);
     Book.create({
         title: req.body.book,
         pages: req.body.pages

@@ -37,14 +37,14 @@ passport.use(new LocalStrategy({
 },
 function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, {message: 'Incorrect username.' });
-      }
-      if (!user.validatePassword(password)) {
-        return done(null, false, {message: 'Incorrect password.' });
-      }
-      return done(null, user);
+        if (err) { return done(err); }
+        if (!user) {
+            return done(null, false, {message: 'Incorrect username.' });
+         }
+          if (!user.validatePassword(password)) {
+            return done(null, false, {message: 'Incorrect password.' });
+        }
+        return done(null, user);
     });
   }
 ));
@@ -111,8 +111,12 @@ router.get('/dashboard', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
+    console.log("Logging Out.");
     req.logOut();
-    res.redirect('/'); // Placeholder for now
+    req.session.destroy(function() {
+        res.clearCookie('connect.sid');
+        res.redirect('/'); // Placeholder for now
+    });
 });
 
 module.exports = {router};
