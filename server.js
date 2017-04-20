@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -20,7 +21,6 @@ const formParser = bodyParser.urlencoded({extended: true});
 // So that I could parse the req.body and what not. Else will be raw and hideous.
 
 // This is basically what Morgan does
-
 /* app.use(function(req, res, next) {
     console.log(req.path);
     console.log(req.method);

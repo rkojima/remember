@@ -39,10 +39,10 @@ function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, {message: 'Incorrect username.' });
       }
       if (!user.validatePassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, {message: 'Incorrect password.' });
       }
       return done(null, user);
     });
@@ -107,7 +107,6 @@ router.post('/login', formParser, loginMiddleware);
 
 // Menu, where they see their books and notes
 router.get('/dashboard', function(req, res) {
-    console.log(req.user);
     res.json({user: req.user.apiRepr()});
 });
 
