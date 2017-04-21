@@ -29,6 +29,18 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
     });
 });
 
+router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
+    const book = req.body.book;
+    console.log(req.body.book);
+    User.findOneAndUpdate(
+        {_id: req.user._id},
+        {$push: {library: book}},
+        {new: true})
+    .then(function(user) {
+        res.redirect('/book/' + book);
+    });
+});
+
 router.get('/book/:id', function(req, res) {
     console.log(req.params.id);
     Book.findById(req.params.id)
