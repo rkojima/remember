@@ -1,31 +1,44 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const {Book} = require('../models/book');
+const {User} = require('../models/user');
+const {authenticatedOnly} = require('./authentication');
 
 const router = express.Router();
 const formParser = bodyParser.urlencoded();
 
-router.get('/create-book', function(req, res) {
+router.get('/create-book', authenticatedOnly, function(req, res) {
     res.render('createBook', {title: "Create a book for your library!"});
 });
 
-router.post('/create-book', formParser, function(req, res) {
-    console.log(req);
+router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
+    console.log(req.user);
     Book.create({
         title: req.body.book,
         pages: req.body.pages
     })
     .then(function(book) {
-        res.send(`The book, "${book.title}," was created.`);
+        User.findOneAndUpdate(
+            {_id: req.user._id}, 
+            {$push: {library: book}}, 
+            {new: true})
+        .then(function(user) {
+            res.redirect('/book/' + book.id);
+        });
     });
 });
 
 router.get('/book/:id', function(req, res) {
+    console.log(req.params.id);
     Book.findById(req.params.id)
     .then(function(book) {
-        res.render("book", {title: book.title, book: book});
+        const userOwns = req.isAuthenticated() ? 
+        req.user.library.map(bookId => bookId.toString()).includes(req.params.id) : false;
+        res.render("book", {title: book.title, book: book, owned: userOwns});
     })
     .catch(function(err) {
+        console.log(err);
         res.sendStatus(404);
     });
     // Give proper message later
