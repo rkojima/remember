@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const config = require('./config');
 const {router: authRouter} = require('./router/authentication');
@@ -34,7 +35,8 @@ app.use(express.static('public'));
 app.use(session({
     secret: 'What is this cat',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: true,
+    store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
 // Initialize passport for the whole app
