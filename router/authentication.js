@@ -99,14 +99,27 @@ router.get('/signup', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
+    if(req.isAuthenticated()) {
+        res.redirect('/dashboard');
+    }
     res.render('index', {title: "Hello!"});
 });
 
 // Made sure that info from form was coming in through post
 router.post('/login', formParser, loginMiddleware);
 
+const authenticatedOnly = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+    }
+    else {
+        res.redirect('/login');
+    }
+};
+
 // Menu, where they see their books and notes
-router.get('/dashboard', function(req, res) {
+// Probably want this in its own router
+router.get('/dashboard', authenticatedOnly, function(req, res) {
     res.json({user: req.user.apiRepr()});
 });
 
@@ -119,4 +132,4 @@ router.get('/logout', function(req, res) {
     });
 });
 
-module.exports = {router};
+module.exports = {router, authenticatedOnly};
