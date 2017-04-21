@@ -35,7 +35,8 @@ router.get('/book/:id', function(req, res) {
     .then(function(book) {
         const userOwns = req.isAuthenticated() ? 
         req.user.library.map(bookId => bookId.toString()).includes(req.params.id) : false;
-        res.render("book", {title: book.title, book: book, owned: userOwns, user: req.user});
+        const showAddButton = req.user && !userOwns;
+        res.render("book", {title: book.title, book: book, owned: userOwns, user: req.user, addButton: showAddButton});
     })
     .catch(function(err) {
         console.log(err);
