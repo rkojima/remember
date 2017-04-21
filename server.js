@@ -7,7 +7,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const config = require('./config');
 const {router: authRouter} = require('./router/authentication');
-const {router: creationRouter} = require('./router/createBook');
+const {router: bookRouter} = require('./router/book');
 
 const app = express();
 
@@ -44,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(authRouter);
-app.use(creationRouter);
+app.use(bookRouter);
 
 // No need for hostname yet
 mongoose.connect(config.DATABASE_URL, function(err) {
