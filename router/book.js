@@ -65,18 +65,19 @@ router.get('/book/:id', function(req, res) {
 router.get('/dashboard', authenticatedOnly, function(req, res) {
     // res.json({library: req.user.library});
     let libraryArray = [];
-    req.user.library.forEach(function(book) {
-        // mongoDB right here
-        Book.findById(book)
-        .then(function(book) {
-            libraryArray.push([
-              book.title, book.pages  
-            ]);
-            console.log(libraryArray);
-        });
+    console.log(Book.findOne({}));
+    // req.user.library.forEach(function(book) {
+    //     // mongoDB right here
+    //     Book.findById(book)
+    //     .then(function(book) {
+    //         libraryArray.push([
+    //           book.title, book.pages  
+    //         ]);
+    //         console.log(libraryArray);
+    //     });
 
-    });
-    console.log(libraryArray);
+    // });
+    // console.log(libraryArray);
     res.send(libraryArray);
     // Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
 });
