@@ -119,9 +119,15 @@ const authenticatedOnly = (req, res, next) => {
 
 // Menu, where they see their books and notes
 // Probably want this in its own router
-router.get('/dashboard', authenticatedOnly, function(req, res) {
-    res.json({user: req.user.apiRepr()});
-});
+// router.get('/dashboard', authenticatedOnly, function(req, res) {
+//     // res.json({library: req.user.library});
+//     let libraryArray;
+//     req.user.library.forEach(function(book) {
+//         // mongoDB right here
+//         libraryArray += Book.findById(book);
+//     });
+//     res.json({library: libraryArray});
+// });
 
 router.get('/logout', function(req, res) {
     console.log("Logging Out.");
