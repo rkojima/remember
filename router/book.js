@@ -65,7 +65,8 @@ router.get('/book/:id', function(req, res) {
 router.get('/dashboard', authenticatedOnly, function(req, res) {
     // res.json({library: req.user.library});
     let libraryArray = [];
-    console.log(Book.findOne({}));
+    console.log(1);
+    // console.log(Book.findOne({}));
     // req.user.library.forEach(function(book) {
     //     // mongoDB right here
     //     Book.findById(book)
