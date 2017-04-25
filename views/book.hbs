@@ -1,10 +1,10 @@
 <h1>{{book.title}}</h1>
 <p>{{book.pages}} pages</p>
 {{#if owned}}<p>You own this book!</p>{{/if}}
-<p>{{user.username}}</p>
+<p>User: {{user.username}}</p>
 {{#if addButton}}
 <form method="post" action="/add-book">
     <input type="hidden" name="book" value="{{book.id}}">
-    <button>Add to your Library</button>
+    <button class="btn btn-info">Add to your Library</button>
 </form>
 {{/if}}
