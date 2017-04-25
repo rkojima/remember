@@ -32,8 +32,13 @@ UserSchema.pre('save', function(next){
 UserSchema.methods.apiRepr  = function() {
     return {
         username: this.username || '',
-        email: this.email || ''
+        email: this.email || '',
+        library: this.library || []
     };
+};
+
+UserSchema.methods.ownBook = function(bookNumber) {
+    return this.library.map(bookId => bookId.toString()).includes(bookNumber);
 };
 
 UserSchema.methods.validatePassword = function(password) {
