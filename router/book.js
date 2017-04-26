@@ -81,13 +81,15 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
     
     // TODO FIXED: Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
     // Book.find takes longer, function(err, docs) only runs after query, but res.send (if place outside of Book.find) will run right after w/o waiting for Book.find
-    /*  Retrieve IDs for all books in library
-        For each ID in array {
-            Retrieve book information based on ID (ASYNCHRONOUS OPERATION)
-            Add it to libraryArray
-        }
 
-        send the completed libraryArray to web browser
+    /*  
+    Retrieve IDs for all books in library
+    For each ID in array {
+        Retrieve book information based on ID (ASYNCHRONOUS OPERATION)
+        Add it to libraryArray
+    }
+
+    send the completed libraryArray to web browser
     */
     Book.find({
         '_id': { $in: 
