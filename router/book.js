@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const {Book} = require('../models/book');
 const {User} = require('../models/user');
@@ -62,11 +63,42 @@ router.get('/book/:id', function(req, res) {
     });
 });
 
+// Helper function to input user library and output "mongoose.Types.ObjectId" + ID of book
+function idToObject(libArray) {
+    let readyId = libArray.map(function(book){
+        return mongoose.Types.ObjectId(book);
+    });
+    console.log(readyId);
+    return readyId;
+}
+
 router.get('/dashboard', authenticatedOnly, function(req, res) {
     // res.json({library: req.user.library});
     let libraryArray = [];
     console.log(1);
     // console.log(Book.findOne({}));
+    console.log(req.user.library);
+    
+    // Book.find takes longer, function(err, docs) only runs after query, but res.send (if place outside of Book.find) will run right after w/o waiting for Book.find
+    Book.find({
+        '_id': { $in: 
+            idToObject(req.user.library)
+        }
+    }, function(err, docs){
+        libraryArray = docs;
+        console.log(libraryArray);
+        res.send(libraryArray);
+    });
+
+    /*  Retrieve IDs for all books in library
+        For each ID in array {
+            Retrieve book information based on ID (ASYNCHRONOUS OPERATION)
+            Add it to libraryArray
+        }
+
+        send the completed libraryArray to web browser
+    */
+
     // req.user.library.forEach(function(book) {
     //     // mongoDB right here
     //     Book.findById(book)
@@ -79,7 +111,6 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
 
     // });
     // console.log(libraryArray);
-    res.send(libraryArray);
     // Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
 });
 
