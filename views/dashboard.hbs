@@ -1,10 +1,13 @@
 <div class="book-box">
 <!-- Use bootstrap progress bar? -->
-    <div class="progress">
+    {{!-- <div class="progress">
         <!-- Possibly make bar blue (info) until finished? -->
         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" 
         aria-valuemin="0" aria-valuemax="100" style="width:40%"> 
             40% Complete
         </div>
-    </div>
+    </div> --}}
+    {{#each book}}
+        <p>{{this.title}}, {{this.pages}}</p>
+    {{/each}}
 </div>

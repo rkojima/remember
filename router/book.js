@@ -79,17 +79,8 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
     // console.log(Book.findOne({}));
     console.log(req.user.library);
     
+    // TODO FIXED: Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
     // Book.find takes longer, function(err, docs) only runs after query, but res.send (if place outside of Book.find) will run right after w/o waiting for Book.find
-    Book.find({
-        '_id': { $in: 
-            idToObject(req.user.library)
-        }
-    }, function(err, docs){
-        libraryArray = docs;
-        console.log(libraryArray);
-        res.send(libraryArray);
-    });
-
     /*  Retrieve IDs for all books in library
         For each ID in array {
             Retrieve book information based on ID (ASYNCHRONOUS OPERATION)
@@ -98,20 +89,21 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
 
         send the completed libraryArray to web browser
     */
+    Book.find({
+        '_id': { $in: 
+            idToObject(req.user.library)
+        }
+    }, function(err, docs){
+        libraryArray = docs;
+        console.log(libraryArray);
+        res.render("dashboard", {book: libraryArray});
+    });
 
-    // req.user.library.forEach(function(book) {
-    //     // mongoDB right here
-    //     Book.findById(book)
-    //     .then(function(book) {
-    //         libraryArray.push([
-    //           book.title, book.pages  
-    //         ]);
-    //         console.log(libraryArray);
-    //     });
-
-    // });
-    // console.log(libraryArray);
-    // Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
+    /*
+    With JSON file, I know that I have info now from library
+    For each book in library, render so that book title and number of pages read are shown
+    Progress bar too
+    */
 });
 
 module.exports = {router};
