@@ -10,7 +10,7 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded();
 
 router.get('/create-book', authenticatedOnly, function(req, res) {
-    res.render('createBook', {title: "Create a book for your library!"});
+    res.render('createBook', populateVariables(req, {title: "Create a book for your library!"}));
 });
 
 router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
@@ -56,7 +56,7 @@ router.get('/book/:id', function(req, res) {
         const userOwns = req.isAuthenticated() ? 
         req.user.ownBook(req.params.id) : false;
         const showAddButton = req.user && !userOwns;
-        res.render("book", {title: book.title, book: book, owned: userOwns, user: req.user, addButton: showAddButton});
+        res.render("book", populateVariables(req, {title: book.title, book: book, owned: userOwns, addButton: showAddButton}));
     })
     .catch(function(err) {
         console.log(err);
@@ -64,7 +64,16 @@ router.get('/book/:id', function(req, res) {
     });
 });
 
+// Used so that I could always have isAuthenticated and user handy when rendering
+function populateVariables(req, others) {
+    return Object.assign({
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user || false,
+    }, others);
+}
+
 // Helper function to input user library and output "mongoose.Types.ObjectId" + ID of book
+// NO NEED FOR THIS ANYMORE, KEEPING JUST TO LOOK AT
 // function idToObject(libArray) {
 //     let readyId = libArray.map(function(book){
 //         return mongoose.Types.ObjectId(book.myBook);
@@ -101,7 +110,7 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
     }, function(err, docs){
         libraryArray = docs;
         console.log(libraryArray);
-        res.render("dashboard", {books: libraryArray});
+        res.render("dashboard", populateVariables(req, {books: libraryArray}));
     });
 
     /*

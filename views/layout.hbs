@@ -10,8 +10,12 @@
 <body>
 <header>
 {{!-- Need handlebars logic here when not authenticated --}}
+{{#if isAuthenticated}}
     <a href="/dashboard">Dashboard</a>
     <a href="/logout">Log Out</a>
+    {{else}}
+    <a href="/login">Login</a>
+{{/if}}
 </header>
 {{{body}}}
 </body>
