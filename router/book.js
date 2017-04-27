@@ -21,8 +21,9 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
     })
     .then(function(book) {
         User.findOneAndUpdate(
-            {_id: req.user._id}, 
-            {$push: {library: book}}, 
+            {_id: req.user._id},
+            // Used to be library: book, but now library items are properties (library is an array) of object (myBook and progress)
+            {$push: {library: {myBook: book, progress: 0}}}, 
             {new: true})
         .then(function(user) {
             res.redirect('/book/' + book.id);
@@ -75,9 +76,9 @@ function idToObject(libArray) {
 router.get('/dashboard', authenticatedOnly, function(req, res) {
     // res.json({library: req.user.library});
     let libraryArray = [];
-    console.log(1);
+    console.log("At dashboard");
     // console.log(Book.findOne({}));
-    console.log(req.user.library);
+    console.log("Showing books in library:" + req.user.library);
     
     // TODO FIXED: Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
     // Book.find takes longer, function(err, docs) only runs after query, but res.send (if place outside of Book.find) will run right after w/o waiting for Book.find
