@@ -65,13 +65,13 @@ router.get('/book/:id', function(req, res) {
 });
 
 // Helper function to input user library and output "mongoose.Types.ObjectId" + ID of book
-function idToObject(libArray) {
-    let readyId = libArray.map(function(book){
-        return mongoose.Types.ObjectId(book);
-    });
-    console.log(readyId);
-    return readyId;
-}
+// function idToObject(libArray) {
+//     let readyId = libArray.map(function(book){
+//         return mongoose.Types.ObjectId(book.myBook);
+//     });
+//     console.log(readyId);
+//     return readyId;
+// }
 
 router.get('/dashboard', authenticatedOnly, function(req, res) {
     // res.json({library: req.user.library});
@@ -92,14 +92,16 @@ router.get('/dashboard', authenticatedOnly, function(req, res) {
 
     send the completed libraryArray to web browser
     */
+    const booksToRender = req.user.library.map(item => item.myBook).map(book => mongoose.Types.ObjectId(book));
+
     Book.find({
         '_id': { $in: 
-            idToObject(req.user.library)
+            booksToRender
         }
     }, function(err, docs){
         libraryArray = docs;
         console.log(libraryArray);
-        res.render("dashboard", {book: libraryArray});
+        res.render("dashboard", {books: libraryArray});
     });
 
     /*
