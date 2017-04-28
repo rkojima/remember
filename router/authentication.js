@@ -59,10 +59,6 @@ passport.deserializeUser(function(user, done) {
   });
 });
 
-router.get('/', function(req, res) {
-    return res.send("Hello World");
-});
-
 // A route when signing up
 router.post('/signup', formParser, function(req, res) {
     if(req.body.psw != req.body['psw-repeat']) {

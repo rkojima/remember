@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const {populateVariables} = require('./util');
 const {Book} = require('../models/book');
 const {User} = require('../models/user');
 const {authenticatedOnly} = require('./authentication');
@@ -64,14 +65,6 @@ router.get('/book/:id', function(req, res) {
     });
 });
 
-// Used so that I could always have isAuthenticated and user handy when rendering
-function populateVariables(req, others) {
-    return Object.assign({
-        isAuthenticated: req.isAuthenticated(),
-        user: req.user || false,
-    }, others);
-}
-
 // Helper function to input user library and output "mongoose.Types.ObjectId" + ID of book
 // NO NEED FOR THIS ANYMORE, KEEPING JUST TO LOOK AT
 // function idToObject(libArray) {
@@ -82,42 +75,4 @@ function populateVariables(req, others) {
 //     return readyId;
 // }
 
-router.get('/dashboard', authenticatedOnly, function(req, res) {
-    // res.json({library: req.user.library});
-    let libraryArray = [];
-    console.log("At dashboard");
-    // console.log(Book.findOne({}));
-    console.log("Showing books in library:" + req.user.library);
-    
-    // TODO FIXED: Having trouble with asynchronous operations, need to somehow do res.send after finding the books in the collection
-    // Book.find takes longer, function(err, docs) only runs after query, but res.send (if place outside of Book.find) will run right after w/o waiting for Book.find
-
-    /*  
-    Retrieve IDs for all books in library
-    For each ID in array {
-        Retrieve book information based on ID (ASYNCHRONOUS OPERATION)
-        Add it to libraryArray
-    }
-
-    send the completed libraryArray to web browser
-    */
-    const booksToRender = req.user.library.map(item => item.myBook).map(book => mongoose.Types.ObjectId(book));
-
-    Book.find({
-        '_id': { $in: 
-            booksToRender
-        }
-    }, function(err, docs){
-        libraryArray = docs;
-        console.log(libraryArray);
-        res.render("dashboard", populateVariables(req, {books: libraryArray}));
-    });
-
-    /*
-    With JSON file, I know that I have info now from library
-    For each book in library, render so that book title and number of pages read are shown
-    Progress bar too
-    */
-});
-
-module.exports = {router};
+module.exports = {router, populateVariables};
