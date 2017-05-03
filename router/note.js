@@ -15,7 +15,9 @@ const formParser = bodyParser.urlencoded();
 router.get('/notes/:id', authenticatedOnly, formParser, function(req, res) {
     Book.findById(req.params.id)
     .then(function(book) {
-        res.render("note", populateVariables(req, {bookName: book.title}));
+        const userOwns = req.isAuthenticated() ? 
+        req.user.ownBook(req.params.id) : false;
+        res.render("note", populateVariables(req, {bookName: book.title, owned: userOwns}));
     });
 });
 
