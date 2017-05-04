@@ -21,4 +21,8 @@ router.get('/notes/:id', authenticatedOnly, formParser, function(req, res) {
     });
 });
 
+router.post('/notes/:id', authenticatedOnly, formParser, function(req, res) {
+    res.send(req.body);
+});
+
 module.exports = {router};
