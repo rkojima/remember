@@ -11,10 +11,23 @@
 }
 
 /* So that input box right next to "Read up to" */
-input.pages{
+input.pages {
     max-width: 50px;
     display: inline-block;
     text-align: right;
     padding-left: 0px;
     padding-right: 0px;
+}
+
+.content {
+    overflow: auto;
+}
+
+.body {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+#note-button {
+    margin-bottom: 15px;
 }
