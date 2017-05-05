@@ -16,12 +16,24 @@
                     <h4 class="modal-title">Create Note</h4>
                 </div>
                 <div class="modal-body">
-                    <textarea class="journal-entry" name="req-body"></textarea>
+                    <label>Read to page: </label>
+                    <input class="pages form-control" type="number" name="end-page">
+                    <textarea class="journal-entry form-control" name="content"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="Save" class="btn btn-info">Save</button> 
+                    <button type="submit" class="btn btn-info">Save</button> 
                 </div>
             </div>
         </form>
     </div>
 </div>
+{{#each note}}
+    <div class="panel panel-default">
+        <div class="panel-heading journal-post">
+            <p>Note Created: {{this.dateCreated}}</p>
+        </div>
+        <div class="panel-body journal-post">
+            <p>{{this.content}}</p>
+        </div>
+    </div>
+{{/each}}

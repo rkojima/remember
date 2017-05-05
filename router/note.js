@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const {populateVariables} = require('./util');
 const {Book} = require('../models/book');
@@ -56,7 +57,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
         user: req.user,
         content: req.body.content,
         endPage: req.body["end-page"],
-        dateCreated: Date().toLocaleString()
+        dateCreated: moment().format('MMMM Do YYYY, h:mm a')
     })
     .then(note => {
         // For now, show json that it worked
