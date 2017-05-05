@@ -13,7 +13,7 @@ const {authenticatedOnly} = require('./authentication');
 const router = express.Router();
 const formParser = bodyParser.urlencoded();
 
-// Middleware
+// Middleware for getting the book object
 function bookLoader(req, res, next) {
     if (!req.params.bookId) {
         res.status(400).send("Please send valid book ID");
@@ -31,13 +31,40 @@ function bookLoader(req, res, next) {
     }
 }
 
+// Middleware for getting the note object
+
+function noteLoader(req, res, next) {
+    if (!req.params.noteId) {
+        res.status(400).send("Please send valid note ID");
+    }
+    else {
+        // Load book first
+        Note.findById(req.params.noteId)
+        .then(function(note) {
+            // How it becomes available to user, like how passport works to make user available
+            req.note = note;
+            next();
+        })
+        .catch(function(err) {
+            res.status(400).send(err);
+        });
+    }
+}
+
+
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBook(req.params.bookId) : false;
-    Note.find({})
+    Note.find({}).sort('-dateCreated')
     .then(function(note) {
         res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
     });
+});
+
+
+router.get('/note/:noteId/delete', authenticatedOnly, noteLoader, function(req, res) {
+    // noteLoader defines req.note
+    res.render("confirmDelete", populateVariables(req, {note: req.note}));
 });
 
 function emptyContent(req, res, next) {
@@ -49,9 +76,12 @@ function emptyContent(req, res, next) {
     }
 }
 
+// TODO delete route to delete note, redirect to note page
+
 router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyContent, function(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     // Then put book in note so that it could be referenced, possibly by populate
+    console.log(req.book);
     Note.create({
         book: req.book,
         user: req.user,
@@ -60,8 +90,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
         dateCreated: moment().format('MMMM Do YYYY, h:mm a')
     })
     .then(note => {
-        // For now, show json that it worked
-        res.status(201).json(note);
+        res.redirect('/notes/'+ note.book);
     })
     .catch(err => {
         console.error(err);
