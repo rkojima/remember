@@ -1,0 +1,8 @@
+<p>Are you sure you want to delete this note?</p>
+<div class="panel panel-default">
+    <p class="panel-body">{{note.content}}</p>
+</div>
+<form method="DELETE" action="/note/{{note.id}}/delete">
+<button class="btn btn-danger" type="submit">Delete</button>
+</form>
+
