@@ -7,4 +7,14 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    margin-top: 15px;
+}
+
+/* So that input box right next to "Read up to" */
+input.pages{
+    max-width: 50px;
+    display: inline-block;
+    text-align: right;
+    padding-left: 0px;
+    padding-right: 0px;
 }
