@@ -9,13 +9,13 @@ const NoteSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    pages: {
+    endPage: {
         type: String,
     },
-    title: {
-        type: String, 
-    },
     content: {
+        type: String,
+    },
+    dateCreated: {
         type: String,
     }
 });
