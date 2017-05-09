@@ -8,7 +8,7 @@ const {User} = require('../models/user');
 const {authenticatedOnly} = require('./authentication');
 
 const router = express.Router();
-const formParser = bodyParser.urlencoded();
+const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/create-book', authenticatedOnly, function(req, res) {
     res.render('createBook', populateVariables(req, {title: "Create a book for your library!"}));

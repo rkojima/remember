@@ -8,7 +8,7 @@ const {User} = require('../models/user');
 const {authenticatedOnly} = require('./authentication');
 
 const router = express.Router();
-const formParser = bodyParser.urlencoded();
+const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/', function(req, res) {
     return res.render("hero", populateVariables(req, {}));

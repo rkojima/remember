@@ -11,7 +11,7 @@ const {authenticatedOnly} = require('./authentication');
 
 
 const router = express.Router();
-const formParser = bodyParser.urlencoded();
+const formParser = bodyParser.urlencoded({extended: true});
 
 // Middleware for getting the book object
 function bookLoader(req, res, next) {
@@ -77,6 +77,15 @@ function emptyContent(req, res, next) {
 }
 
 // TODO delete route to delete note, redirect to note page
+router.post('/note/:noteId/delete', authenticatedOnly, formParser, function(req, res) {
+    console.log("post operation");
+    // Find ID of book, then delete note, then redirect to page of note for book
+    let bookOfNote = "";
+    Note.findByIdAndRemove(req.params.noteId)
+    .then(function(note) {
+        res.redirect("/notes/" + note.book);
+    });
+});
 
 router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyContent, function(req, res) {
     // console.log(req.body);
