@@ -55,7 +55,8 @@ function noteLoader(req, res, next) {
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBook(req.params.bookId) : false;
-    Note.find({}).sort('-dateCreated')
+    // Match note to book that has note
+    Note.find({book : req.book}).sort('-dateCreated')
     .then(function(note) {
         res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
     });
