@@ -7,6 +7,8 @@
         </div>
     </div> --}}
 <!--TODO Need to fix CSS margin error that adds some of progress bar to the left and right. -->
+<div class="container">
+
 {{#each books}}
     <div class="book-box">
         <h3 class="book-name">{{this.title}}</h3>
@@ -16,7 +18,9 @@
                  <span>0 out of {{this.pages}} pages read!</span>
                  </div>
             </div>
+            <div class="col-xs-4">
             <a href="/notes/{{this.id}}" class="book-notes btn btn-default btn-xs">Notes</a>
+            </div>
             <br>
     </div>
 {{/each}}
