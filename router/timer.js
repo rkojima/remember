@@ -15,4 +15,9 @@ router.get('/timer', authenticatedOnly, formParser, function(req, res) {
     res.render('timer', populateVariables(req, {}));
 });
 
+router.post('/timer', authenticatedOnly, formParser, function(req, res) {
+    console.log(typeof req.body.minutes);
+    res.render('countdownTimer', populateVariables(req, {time: parseInt(req.body.minutes * 60)}));
+});
+
 module.exports = {router};
