@@ -7,6 +7,10 @@
         <span class="input-group-btn">
             <button type="submit" class="btn btn-primary">Let's Read!</button>
         </span>
-        
+    <select class="form-control">
+      {{#each books}}
+      <option>{{this.myBook}}</option>
+      {{/each}}
+    </select>
     </form>
 </div>
