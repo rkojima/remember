@@ -12,12 +12,30 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/timer', authenticatedOnly, formParser, function(req, res) {
-    console.log(Book.findOne({id: req.user.library[0].myBook}).title);
-    res.render('timer', populateVariables(req, {books: req.user.library}));
+        //authenticatedOnly should use passport and get me the user
+        //then I should be able to get user's library
+        //then populate it with books from library
+        //then get book titles from the book
+    let titleArray = {};
+        // Book.find(req.user.library)
+        // .then(book => {
+        //     console.log("Test 1 " + book);
+        // });
+        Book.find(req.user.library)
+        .populate('myBook')
+        .then(function(here) {
+            res.render('timer', populateVariables(req, {books: here}));
+        });
+
+        // console.log("Test 3" + req.user);
+        // req.user.library.forEach(function(book) {
+        //     console.log(book.myBook);
+        // });
 });
 
 router.post('/timer', authenticatedOnly, formParser, function(req, res) {
-    console.log(typeof req.body.minutes);
+    console.log(req.body.minutes);
+    console.log(req.body["book-to-read"]);
     // Timer.create({
     //     user: req.user,
     //     book: 
