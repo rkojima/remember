@@ -1,16 +1,20 @@
 <div class="timer-box">
     <!-- Going to need dropdown menu of books, amount of time to set timer, and button to start timer -->
     <!-- Possibly make this modal -->
-    <label>How many minutes do you want to read for?</label>
     <form action="" class="input-group" method="POST">
-        <input type="number" name="minutes" class="form-control" />
-        <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary">Let's Read!</button>
-        </span>
-    <select class="form-control">
-      {{#each books}}
-      <option>{{this.myBook}}</option>
-      {{/each}}
-    </select>
+        <div class="form-group">
+            <label for="minutesToRead">How many minutes to read?</label>
+            <input type="number" class="form-control" id="minutesToRead" name="minutes"  placeholder="1" />
+        </div>
+        <div class="form-group">
+            <label for="bookToRead">Which book to read?</label>
+            <select name="book-to-read" id="bookToRead" class="form-control">
+            {{#each books}}
+                <option>{{this.title}}</option>
+            {{/each}}
+            </select>
+        </div>    
+        <br></br>
+        <button type="submit" class="btn btn-primary btn-block">Let's Read!</button>
     </form>
 </div>
