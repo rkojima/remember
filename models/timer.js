@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const TimerSchema = mongoose.Schema({
     book: {
@@ -10,7 +11,7 @@ const TimerSchema = mongoose.Schema({
         ref: 'user'
     },
     endTime: {
-        type: Date,
+        type: Object,
         required: true
     },
 });

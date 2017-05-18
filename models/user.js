@@ -25,6 +25,7 @@ const UserSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId, 
                 ref: 'book',
             },
+            // Possibly use myTitle to get book title?
             progress: {
                 type: Number
             }

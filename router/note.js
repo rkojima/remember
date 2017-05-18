@@ -108,4 +108,4 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
     });
 });
 
-module.exports = {router};
+module.exports = {router, bookLoader, noteLoader};
