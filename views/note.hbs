@@ -34,7 +34,9 @@
         <div class="panel-heading journal-post">
             <a class="close" href="/note/{{this.id}}/delete">&times;</a>
             <p>Note Created: {{this.dateCreated}}</p>
-            <p>Read to page: {{this.endPage}}</p>
+            <p>Read to page: {{this.endPage}}<span><a class="edit btn btn-info btn-sm" href="/note/{{this.id}}/edit">Edit</a></span></p>
+            
+
         </div>
         <div class="panel-body journal-post">
             <p class="content">{{this.content}}</p>
