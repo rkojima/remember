@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-const bookSchema = mongoose.Schema({
+const BookSchema = mongoose.Schema({
     title: {
         type: String,
     },
@@ -17,6 +17,6 @@ const bookSchema = mongoose.Schema({
 
 });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model('Book', BookSchema);
 
 module.exports = {Book};

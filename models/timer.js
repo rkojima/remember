@@ -4,11 +4,11 @@ const moment = require('moment');
 const TimerSchema = mongoose.Schema({
     book: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'book'
+        ref: 'Book'
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'User'
     },
     endTime: {
         type: Object,

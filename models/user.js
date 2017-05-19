@@ -23,7 +23,7 @@ const UserSchema = mongoose.Schema({
         {
             myBook: {
                 type: mongoose.Schema.Types.ObjectId, 
-                ref: 'book',
+                ref: 'Book',
             },
             // Possibly use myTitle to get book title?
             progress: {
