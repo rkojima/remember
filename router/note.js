@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const moment = require('moment');
 
-const {populateVariables} = require('./util');
+const {populateVariables, UserLibraryLoader, noteLoader, bookLoader, timerLoader} = require('./util');
 const {Book} = require('../models/book');
 const {User} = require('../models/user');
 const {Note} = require('../models/note');
@@ -12,45 +12,6 @@ const {authenticatedOnly} = require('./authentication');
 
 const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
-
-// Middleware for getting the book object
-function bookLoader(req, res, next) {
-    if (!req.params.bookId) {
-        res.status(400).send("Please send valid book ID");
-    }
-    else {
-        // Load book first
-        Book.findById(req.params.bookId)
-        .then(function(book) {
-            req.book = book;
-            next();
-        })
-        .catch(function(err) {
-            res.status(400).send(err);
-        });
-    }
-}
-
-// Middleware for getting the note object
-
-function noteLoader(req, res, next) {
-    if (!req.params.noteId) {
-        res.status(400).send("Please send valid note ID");
-    }
-    else {
-        // Load book first
-        Note.findById(req.params.noteId)
-        .then(function(note) {
-            // How it becomes available to user, like how passport works to make user available
-            req.note = note;
-            next();
-        })
-        .catch(function(err) {
-            res.status(400).send(err);
-        });
-    }
-}
-
 
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
     const userOwns = req.isAuthenticated() ? 
@@ -105,6 +66,19 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
     .catch(err => {
         console.error(err);
         res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+// TODO work on getting and editing notes
+router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
+
+});
+
+router.put('/notes/:noteId/edit', authenticatedOnly, formParser, function(req, res) {
+    Note.findByIdAndUpdate(req.params.noteId, {content: 'req.params.SOMETHING'})
+    .then(notes => {
+        // redirect to notes page with bookId
+        //res.redirect('/notes/')
     });
 });
 
