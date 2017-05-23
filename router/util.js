@@ -14,12 +14,12 @@ const userLibraryLoader = (req, res, next) => {
     .then(user => { 
         // Something about req.user can't assign
         // return res.json(user);
-        console.log("Before: " + req.user.library);
+        // console.log("Before: " + req.user.library);
         req.user = user;
-        console.log("After: " + req.user.library);
+        // console.log("After: " + req.user.library);
     })
     .then(user => {
-        console.log("Later: " + req.user.library);
+        // console.log("Later: " + req.user.library);
         return next();
     });
 };
