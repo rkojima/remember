@@ -10,7 +10,6 @@ function populateVariables(req, others) {
 
 // There seems to be an async issue where req.user doesn't happen quick enough for it to go through
 const userLibraryLoader = (req, res, next) => {
-  if (req.isAuthenticated()) {
     User.findById(req.user.id).populate('library.myBook')
     .then(user => { 
         // Something about req.user can't assign
@@ -18,10 +17,11 @@ const userLibraryLoader = (req, res, next) => {
         console.log("Before: " + req.user.library);
         req.user = user;
         console.log("After: " + req.user.library);
+    })
+    .then(user => {
+        console.log("Later: " + req.user.library);
+        return next();
     });
-  }
-  console.log("Outside: " + req.user.library);
-  next();
 };
 
 

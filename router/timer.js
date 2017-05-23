@@ -13,23 +13,25 @@ const {authenticatedOnly} = require('./authentication');
 const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
-router.get('/timer', authenticatedOnly, formParser, function(req, res) {
+router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
         //authenticatedOnly should use passport and get me the user
         //then I should be able to get user's library
         //then populate it with books from library
         //then get book titles from the book
         //console.log(req.user.library);
-        User.findById(req.user.id).populate('library.myBook')
-        .then(user => { 
-        req.user = user;
-        })
-        .then(user => {
+        // User.findById(req.user.id).populate('library.myBook')
+        // .then(user => { 
+        // req.user = user;
+        // })
+        // .then(user => {
             // console.log("After middleware: " + req.user.library);
+            console.log("Get router: " + req.user);
             res.render('timer', populateVariables(req, {books: req.user.library}));
-        });
+        // });
 });
 
-router.post('/timer', authenticatedOnly, formParser, function(req, res) {
+router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
+    console.log("Post router: " + req.user.library);
     // TODO: check for if minutes is null or nothing was entered
     // if (req.body.minutes < 1 || req.body.minutes === null) {
 
