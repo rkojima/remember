@@ -8,24 +8,15 @@
 
 <script type="text/javascript">
 
-    let clock = $('.your-clock').FlipClock({
+    let clock = $('.your-clock').FlipClock({{time}}, {
         clockFace: 'MinuteCounter',
-        countdown: true
+        countdown: true,
+        callbacks: {
+          interval: function() {
+            console.log("Test");
+          }
+        }
     });
-    clock.setTime({{time}});
     clock.start();
-    setTimeout(function(){ 
-    checktime();
-    }, 1000);
-
-    function checktime(){
-      t = clock.getTime();
-      if(t<=0){
-        clock.setTime(10);
-        clock.start();
-      }
-      setTimeout(function(){ 
-        checktime();
-      }, 1000);
-    }
+    
 </script>
