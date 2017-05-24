@@ -20,40 +20,43 @@ router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(
         //then get book titles from the book
 
         // console.log("Get router: " + req.user);
+        // console.log("User: " + req.user);
+        // console.log("Library: " + req.user.library);
         res.render('timer', populateVariables(req, {books: req.user.library}));
 });
 
 router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
-    console.log("Post router: " + req.user.library);
+    // console.log("Post router: " + req.user.library);
     // TODO: check for if minutes is null or nothing was entered
     // if (req.body.minutes < 1 || req.body.minutes === null) {
-
+    //find book in library that matches book in Book db
+    // console.log("Book to read: " + req.body["book-to-read"]);
+    // console.log("Own book? " + req.user.ownBook(req.body["book-to-read"]));
+    // if (req.user.ownBook(req.body["book-to-read"])) {
+    // } else {
+    //     res.redirect('/timer/');
+    //     // TODO use Express flash
     // }
-    // console.log(req.user);
-    // console.log(req.body);
-    // Book.find({title: req.body.title})
-    // .then(function (book) {
-    //     // body...
-    //     User.find()
-    // });
-    // // Timer.create({
-    //     user: req.user,
-    //     book: req.book,
-    //     endTime: moment().add(req.body.minutes, "m"),
-    // })
+    Timer.create({
+        user: req.user,
+        book: req.body["book-to-read"],
+        endTime: moment().add(req.body.minutes, "m").unix(),
+    })
+    .then(timer => {
+        res.redirect('/timer/' + timer.id);
+    });
+    
     // .then(function(timer) {
-    // // console.log(typeof moment()); moment is an object
+    // console.log(typeof moment()); moment is an object
     //     console.log(timer);
-        res.send("This got to here");
-        // res.redirect('/timer/' + timer.id);
+    // res.send("This got to here");
+    // res.redirect('/timer/' + timer.id);
     // });
 });
 
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
-    // let readingMinutes = moment(timer.endTime) - moment();
-    console.log(typeof moment());
-    console.log(readingMinutes);
-    res.render('countdownTimer', populateVariables(req, {time: 6000}));
+    let readingSeconds = req.timer.endTime - moment().unix();
+    res.render('countdownTimer', populateVariables(req, {time: readingSeconds}));
 });
 
 // When countdown reaches 0, I want to redirect them to the notes page, with the option to write notes for whichever book they read. 
