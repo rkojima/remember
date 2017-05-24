@@ -11,7 +11,7 @@ const TimerSchema = mongoose.Schema({
         ref: 'User'
     },
     endTime: {
-        type: Object,
+        type: Number,
         required: true
     },
 });
