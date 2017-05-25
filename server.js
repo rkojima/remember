@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('express-flash');
+const cookieParser = require('cookie-parser');
 
 const config = require('./config');
 const {router: authRouter} = require('./router/authentication');
@@ -34,6 +36,8 @@ app.use(morgan('dev')); // Makes it easier to develop
 // Exposing static files (files that client should see) 
 app.use(express.static('public'));
 
+app.use(cookieParser('secret'));
+
 // Define a cookie-based session for the whole app.
 app.use(session({
     secret: 'What is this cat',
@@ -45,6 +49,7 @@ app.use(session({
 // Initialize passport for the whole app
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // Mounting the router
 app.use(authRouter);
@@ -52,6 +57,7 @@ app.use(bookRouter);
 app.use(userRouter);
 app.use(noteRouter);
 app.use(timerRouter);
+
 
 // No need for hostname yet
 mongoose.connect(config.DATABASE_URL, function(err) {

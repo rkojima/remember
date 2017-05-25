@@ -29,17 +29,14 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
     // TODO: check for if minutes is null or nothing was entered
     if (req.body.minutes < 1 || req.body.minutes === null) {
         res.redirect('/timer');
-        // Set up alert here
+        // TODO Set up alert here
     }
     //find book in library that matches book in Book db
-    // console.log("Book to read: " + req.body["book-to-read"]);
-    // console.log("Own book? " + req.user.ownBook(req.body["book-to-read"]));
-    // TODO if (req.user.ownBook(req.body["book-to-read"])) {
-    // } else {
-    //     res.redirect('/timer/');
-    //     // TODO use Express flash
-    // }
-    Timer.create({
+    console.log(req.body);
+    console.log("Book to read: " + req.body["book-to-read"]);
+    console.log("Own book? " + req.user.ownBook(req.body["book-to-read"]));
+    if (req.user.ownBook(req.body["book-to-read"])) {
+        Timer.create({
         user: req.user,
         book: req.body["book-to-read"],
         endTime: moment().add(req.body.minutes, "m").unix(),
@@ -47,7 +44,12 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
     .then(timer => {
         res.redirect('/timer/' + timer.id);
     });
-    
+    } else {
+        // TODO use Express flash
+        req.flash('error', 'Does not work');
+        res.redirect('/timer/');
+       
+    }
     // .then(function(timer) {
     // console.log(typeof moment()); moment is an object
     //     console.log(timer);

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const moment = require('moment');
+const flash = require('express-flash');
 
 const {populateVariables, UserLibraryLoader, noteLoader, bookLoader, timerLoader} = require('./util');
 const {Book} = require('../models/book');
@@ -14,11 +15,13 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
+    
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBook(req.params.bookId) : false;
     // Match note to book that has note
     Note.find({book : req.book}).sort('-dateCreated')
     .then(function(note) {
+        req.flash('info', 'Welcome');
         res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
     });
 });

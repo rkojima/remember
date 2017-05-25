@@ -38,6 +38,9 @@
   </nav>
   </header>
   <div class="space"></div>
+  {{#each messages.error}}
+  <div>{{this}}</div>
+  {{/each}}
   <div class="body-margin">
     {{{body}}}
   </div>
