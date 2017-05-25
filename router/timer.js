@@ -26,13 +26,15 @@ router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(
 });
 
 router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
-    // console.log("Post router: " + req.user.library);
     // TODO: check for if minutes is null or nothing was entered
-    // if (req.body.minutes < 1 || req.body.minutes === null) {
+    if (req.body.minutes < 1 || req.body.minutes === null) {
+        res.redirect('/timer');
+        // Set up alert here
+    }
     //find book in library that matches book in Book db
     // console.log("Book to read: " + req.body["book-to-read"]);
     // console.log("Own book? " + req.user.ownBook(req.body["book-to-read"]));
-    // if (req.user.ownBook(req.body["book-to-read"])) {
+    // TODO if (req.user.ownBook(req.body["book-to-read"])) {
     // } else {
     //     res.redirect('/timer/');
     //     // TODO use Express flash
@@ -55,7 +57,14 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
 });
 
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
+    // Need a checker when the timer has passed
+    // Check when end time is actual time
     let readingSeconds = req.timer.endTime - moment().unix();
+    console.log(req.params.timerId);
+    Timer.find({_id: req.params.timerId})
+    .then(timer => {
+        console.log(timer);
+    });
     res.render('countdownTimer', populateVariables(req, {time: readingSeconds}));
 });
 

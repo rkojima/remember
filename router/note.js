@@ -42,6 +42,7 @@ function emptyContent(req, res, next) {
 router.post('/note/:noteId/delete', authenticatedOnly, formParser, function(req, res) {
     console.log("post operation");
     // Find ID of book, then delete note, then redirect to page of note for book
+    // Check which page user read up to, then check whether that's larger than user's previous number
     let bookOfNote = "";
     Note.findByIdAndRemove(req.params.noteId)
     .then(function(note) {
