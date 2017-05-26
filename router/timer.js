@@ -28,13 +28,11 @@ router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(
 router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
     // TODO: check for if minutes is null or nothing was entered
     if (req.body.minutes < 1 || req.body.minutes === null) {
+        req.flash('error', 'Please enter a positive integer!');
         res.redirect('/timer');
         // TODO Set up alert here
     }
     //find book in library that matches book in Book db
-    console.log(req.body);
-    console.log("Book to read: " + req.body["book-to-read"]);
-    console.log("Own book? " + req.user.ownBook(req.body["book-to-read"]));
     if (req.user.ownBook(req.body["book-to-read"])) {
         Timer.create({
         user: req.user,
@@ -62,12 +60,12 @@ router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res)
     // Need a checker when the timer has passed
     // Check when end time is actual time
     let readingSeconds = req.timer.endTime - moment().unix();
-    console.log(req.params.timerId);
-    Timer.find({_id: req.params.timerId})
+    Timer.findOne({_id: req.params.timerId})
     .then(timer => {
-        console.log(timer);
+        console.log("Book: " + timer.book);
+        res.render('countdownTimer', populateVariables(req, {time: readingSeconds, bookId: timer.book, layout: "layoutTimer.hbs"}));
+
     });
-    res.render('countdownTimer', populateVariables(req, {time: readingSeconds}));
 });
 
 // When countdown reaches 0, I want to redirect them to the notes page, with the option to write notes for whichever book they read. 
