@@ -83,3 +83,7 @@ body {
   float: right;
   display: inline-block;
 }
+
+.alert {
+  margin-top: 1px;
+}
