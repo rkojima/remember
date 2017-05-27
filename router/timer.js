@@ -14,15 +14,15 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
-        //authenticatedOnly should use passport and get me the user
-        //then I should be able to get user's library
-        //then populate it with books from library
-        //then get book titles from the book
+    //authenticatedOnly should use passport and get me the user
+    //then I should be able to get user's library
+    //then populate it with books from library
+    //then get book titles from the book
 
-        // console.log("Get router: " + req.user);
-        // console.log("User: " + req.user);
-        // console.log("Library: " + req.user.library);
-        res.render('timer', populateVariables(req, {books: req.user.library}));
+    // console.log("Get router: " + req.user);
+    // console.log("User: " + req.user);
+    // console.log("Library: " + req.user.library);
+    res.render('timer', populateVariables(req, {books: req.user.library}));
 });
 
 router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
