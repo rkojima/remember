@@ -44,6 +44,11 @@
     </div>
 {{/each}}
 <script type="text/javascript">
+$(document).ready(function() {
+    if (window.location.search.length) {
+        $( "#note-button" ).trigger("click");
+    }
+})
 //document ready check for jquery in url
 //if "?created=true" in url
 //lead to modal page
