@@ -73,13 +73,6 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
     });
 });
 
-// TODO set up routers so that after timer hits 0 or is stopped, directs to note taking page
-router.get('/notes/:bookId/new', function(req, res) {
-    // Get bookId from Timer 
-    // Set up note page from there
-    res.send("Note here");
-});
-
 // TODO work on getting and editing notes
 router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
 
