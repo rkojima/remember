@@ -14,7 +14,7 @@
             console.log("Test");
             let time = clock.getTime().time;
             if (time <= 0) {
-                window.location.replace(`/notes/{{bookId}}/new`);
+                window.location.replace(`/notes/{{bookId}}?created=true`);
             }
           }
         }
