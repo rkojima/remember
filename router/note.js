@@ -77,7 +77,11 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
 
 // TODO work on getting and editing notes
 router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
-    res.send(req.params.noteId);
+    Note.findById({_id: req.params.noteId})
+    .then(note => {
+        res.render('confirmEdit', populateVariables(req, {note: note}));
+    });
+    
 });
 
 router.put('/notes/:noteId/edit', authenticatedOnly, formParser, function(req, res) {
