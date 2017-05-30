@@ -49,7 +49,8 @@ UserSchema.methods.apiRepr  = function() {
 UserSchema.methods.ownBook = function(bookNumber) {
     // console.log(this.library);
     // Can't do this.library.myBook.map b/c myBook is not an array nor is a property of library, so needs to be both to map
-    return this.library.map(item => item.myBook.id).includes(bookNumber);
+
+    return this.library.map(item => item.myBook.id.includes(bookNumber));
 };
 
 UserSchema.methods.validatePassword = function(password) {
