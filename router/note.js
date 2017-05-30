@@ -16,10 +16,12 @@ const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
     
+    console.log(req.params.bookId);
+    console.log(req.user);
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBook(req.params.bookId) : false;
     // Match note to book that has note
-    Note.find({book : req.book}).sort('-dateCreated')
+    Note.find({book : req.book.id}).sort('-dateCreated')
     .then(function(note) {
         req.flash('info', 'Welcome');
         res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
@@ -62,10 +64,10 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
         user: req.user,
         content: req.body.content,
         endPage: req.body["end-page"],
-        dateCreated: moment().format('MMMM Do YYYY, h:mm a')
+        dateCreated: moment().format('MMMM Do YYYY, h:mm:ss a')
     })
     .then(note => {
-        res.redirect('/notes/'+ note.book);
+        res.redirect('/notes/'+ note.book.id);
     })
     .catch(err => {
         console.error(err);
