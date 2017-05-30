@@ -87,3 +87,8 @@ body {
 .alert {
   margin-top: 1px;
 }
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+}
