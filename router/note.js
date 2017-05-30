@@ -75,7 +75,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
     });
 });
 
-// TODO work on getting and editing notes
+// TODO work on editing notes
 router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
     Note.findById({_id: req.params.noteId})
     .then(note => {
@@ -84,11 +84,14 @@ router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
     
 });
 
-router.put('/notes/:noteId/edit', authenticatedOnly, formParser, function(req, res) {
-    Note.findByIdAndUpdate(req.params.noteId, {content: 'req.params.SOMETHING'})
-    .then(notes => {
+// Editing notes
+router.post('/notes/:noteId/edit', authenticatedOnly, formParser, function(req, res) {
+    Note.findByIdAndUpdate(req.params.noteId, {content: req.body.content})
+    .populate('book')
+    .then(note => {
         // redirect to notes page with bookId
-        //res.redirect('/notes/')
+        req.flash('info', 'Note was edited!');
+        res.redirect('/notes/' + note.book.id);
     });
 });
 
