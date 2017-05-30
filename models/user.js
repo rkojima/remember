@@ -21,14 +21,8 @@ const UserSchema = mongoose.Schema({
     },
     library: [
         {
-            myBook: {
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Book',
-            },
-            // Possibly use myTitle to get book title?
-            progress: {
-                type: Number
-            }
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Book',
         }
     ]
 });
@@ -49,8 +43,9 @@ UserSchema.methods.apiRepr  = function() {
 UserSchema.methods.ownBook = function(bookNumber) {
     // console.log(this.library);
     // Can't do this.library.myBook.map b/c myBook is not an array nor is a property of library, so needs to be both to map
-
-    return this.library.map(item => item.myBook.id.includes(bookNumber));
+    console.log("Book Number: " + bookNumber);
+    console.log("This library: " + this.library);
+    return this.library.find(book => book.id === bookNumber);
 };
 
 UserSchema.methods.validatePassword = function(password) {

@@ -24,7 +24,7 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
         User.findOneAndUpdate(
             {_id: req.user._id},
             // Used to be library: book, but now library items are properties (library is an array) of object (myBook and progress)
-            {$push: {library: {myBook: book, progress: 0}}}, 
+            {$push: {library: book}}, 
             {new: true})
         .then(function(user) {
             res.redirect('/book/' + book.id);
@@ -57,7 +57,10 @@ router.get('/book/:id', function(req, res) {
         const userOwns = req.isAuthenticated() ? 
         req.user.ownBook(req.params.id) : false;
         const showAddButton = req.user && !userOwns;
-        res.render("book", populateVariables(req, {title: book.title, book: book, owned: userOwns, addButton: showAddButton}));
+        book.farthestNote().then(function(note) {
+            console.log("Note: " + note);
+            res.render("book", populateVariables(req, {title: book.title, book: book, owned: userOwns, addButton: showAddButton}));
+        });
     })
     .catch(function(err) {
         console.log(err);

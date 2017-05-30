@@ -10,7 +10,7 @@ const NoteSchema = mongoose.Schema({
         ref: 'User'
     },
     endPage: {
-        type: String,
+        type: Number,
     },
     content: {
         type: String,

@@ -14,11 +14,12 @@ function populateVariables(req, others) {
 // There seems to be an async issue where req.user doesn't happen quick enough for it to go through
 const userLibraryLoader = (req, res, next) => {
     if (req.isAuthenticated()) {
-        User.findById(req.user.id).populate('library.myBook')
+        User.findById(req.user.id).populate('library')
             .then(user => { 
                 // Something about req.user can't assign
                 // return res.json(user);
                 // console.log("Before: " + req.user.library);
+                console.log("User: " + user);
                 req.user = user;
                 next();
                 // console.log("After: " + req.user.library);
