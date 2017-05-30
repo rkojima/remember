@@ -15,12 +15,12 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
-    
-    console.log(req.params.bookId);
-    console.log(req.user);
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBook(req.params.bookId) : false;
     // Match note to book that has note
+    console.log(req.book);
+    // Sort might not work correctly (e.g. 5th vs 21st, 
+    // 5th might be sorted higher in descending order when it shouldn't)
     Note.find({book : req.book.id}).sort('-dateCreated')
     .then(function(note) {
         req.flash('info', 'Welcome');
@@ -29,7 +29,7 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
 });
 
 
-router.get('/note/:noteId/delete', authenticatedOnly, noteLoader, function(req, res) {
+router.get('/notes/:noteId/delete', authenticatedOnly, noteLoader, function(req, res) {
     // noteLoader defines req.note
     res.render("confirmDelete", populateVariables(req, {note: req.note}));
 });
@@ -44,7 +44,7 @@ function emptyContent(req, res, next) {
 }
 
 // TODO delete route to delete note, redirect to note page
-router.post('/note/:noteId/delete', authenticatedOnly, formParser, function(req, res) {
+router.post('/notes/:noteId/delete', authenticatedOnly, formParser, function(req, res) {
     console.log("post operation");
     // Find ID of book, then delete note, then redirect to page of note for book
     // Check which page user read up to, then check whether that's larger than user's previous number
@@ -77,7 +77,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
 
 // TODO work on getting and editing notes
 router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
-
+    res.send(req.params.noteId);
 });
 
 router.put('/notes/:noteId/edit', authenticatedOnly, formParser, function(req, res) {
