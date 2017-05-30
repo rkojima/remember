@@ -39,7 +39,7 @@ router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
     } 
     else {
     const book = req.body.book;
-    console.log(req.body.book);
+    console.log("Seeing book in post router: " + req.body.book);
     User.findOneAndUpdate(
         {_id: req.user._id},
         {$push: {library: book}},
@@ -51,7 +51,7 @@ router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
 });
 
 router.get('/book/:id', function(req, res) {
-    console.log(req.params.id);
+    console.log("req.params.id: " + req.params.id);
     Book.findById(req.params.id)
     .then(function(book) {
         const userOwns = req.isAuthenticated() ? 
