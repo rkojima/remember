@@ -63,7 +63,7 @@ router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res)
     Timer.findOne({_id: req.params.timerId})
     .then(timer => {
         console.log("Book: " + timer.book);
-        res.render('countdownTimer', populateVariables(req, {time: readingSeconds, bookId: timer.book, layout: "layoutTimer.hbs"}));
+        res.render('countdownTimer', populateVariables(req, {time: readingSeconds, book: timer.book, layout: "layoutTimer.hbs"}));
 
     });
 });
