@@ -1,7 +1,6 @@
-<p>Are you sure you want to delete this note?</p>
-<div>
-    <textarea>{{note.content}}</textarea>
-</div>
-<form method="post" action="/notes/{{note.id}}/delete">
+<p>Edit this note</p>
+
+<form method="post" action="/notes/{{note.id}}/edit">
+    <textarea name="content">{{note.content}}</textarea>
     <button class="btn btn-info" type="submit">Confirm Edit</button>
 </form>
