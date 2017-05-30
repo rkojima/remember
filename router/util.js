@@ -1,6 +1,7 @@
 const {User} = require('../models/user');
 const {Timer} = require('../models/timer');
 const {Book} = require('../models/book');
+const {Note} = require('../models/note');
 
 // Used so that I could always have isAuthenticated and user handy when rendering
 function populateVariables(req, others) {
