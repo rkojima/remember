@@ -13,7 +13,12 @@ const BookSchema = mongoose.Schema({
     isbn: {
         type: Number,
     },
-
+    progress: {
+        type: Number,
+    },
+    percentage: {
+        type: Number,
+    }
     //TODO add book image to schema
 
 });

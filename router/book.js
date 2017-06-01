@@ -18,7 +18,9 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
     console.log(req.user);
     Book.create({
         title: req.body.book,
-        pages: req.body.pages
+        pages: req.body.pages,
+        progress: 0,
+        percentage: 0,
     })
     .then(function(book) {
         console.log("Book: " + book);
@@ -62,8 +64,9 @@ router.get('/book/:id', function(req, res) {
         const userOwns = req.isAuthenticated() ? 
         req.user.ownBook(req.params.id) : false;
         const showAddButton = req.user && !userOwns;
+        // probably want to use this code in a note router
         book.farthestNote().then(function(note) {
-            // console.log("Note: " + note);
+            console.log("Note: " + note);
             res.render("book", populateVariables(req, {title: book.title, book: book, owned: userOwns, addButton: showAddButton}));
         });
     })

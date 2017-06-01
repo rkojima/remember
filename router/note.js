@@ -21,11 +21,26 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
     console.log(req.book);
     // Sort might not work correctly (e.g. 5th vs 21st, 
     // 5th might be sorted higher in descending order when it shouldn't)
-    Note.find({book : req.book.id}).sort('-dateCreated')
-    .then(function(note) {
-        req.flash('info', 'Welcome');
-        res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
-    });
+    Book.findById(req.params.bookId)
+    .then(book => {
+        book.farthestNote()
+        .then(note => {
+            console.log("This note: " + note);
+            console.log("Book: " + book);
+            console.log("Book progress: " + book.progress);
+            book.progress = note.endPage;
+            book.percentage = (100 * book.progress)/book.pages;
+            book.save();
+        });
+    })
+    .then(test => {
+        console.log("Test: " + test);
+        Note.find({book : req.book.id}).sort('-dateCreated')
+        .then(function(note) {
+            req.flash('info', 'Welcome');
+            res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
+        });
+    });   
 });
 
 

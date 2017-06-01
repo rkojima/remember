@@ -15,9 +15,9 @@
     <div class="book-box">
         <h3 class="book-name">{{this.title}}</h3>
             <div class="progress col-xs-8">
-                 <div class="progress-bar" role="progressbar" aria-valuenow="70" 
-                 aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                 <span>0 out of {{this.pages}} pages read!</span>
+                 <div class="progress-bar" role="progressbar" aria-valuenow="{{this.percentage}}" 
+                 aria-valuemin="0" aria-valuemax="100" style="width:{{this.percentage}}%">
+                 <span>{{this.progress}} out of {{this.pages}} pages read!</span>
                  </div>
             </div>
             <div class="col-xs-4">
