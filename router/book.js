@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const {populateVariables} = require('./util');
+const {populateVariables, bookLoader} = require('./util');
 const {Book} = require('../models/book');
 const {User} = require('../models/user');
 const {authenticatedOnly} = require('./authentication');
@@ -21,12 +21,14 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
         pages: req.body.pages
     })
     .then(function(book) {
+        console.log("Book: " + book);
         User.findOneAndUpdate(
             {_id: req.user._id},
             // Used to be library: book, but now library items are properties (library is an array) of object (myBook and progress)
             {$push: {library: book}}, 
             {new: true})
         .then(function(user) {
+            console.log("User: " + user);
             res.redirect('/book/' + book.id);
         });
     });
@@ -38,27 +40,30 @@ router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
         res.redirect('/book/' + req.body.book);
     } 
     else {
-    const book = req.body.book;
-    console.log("Seeing book in post router: " + req.body.book);
-    User.findOneAndUpdate(
-        {_id: req.user._id},
-        {$push: {library: book}},
-        {new: true})
-    .then(function(user) {
-        res.redirect('/book/' + book);
-    });
-}
+        const book = req.body.book;
+        console.log("Type of book: " + typeof book);
+        User.findOneAndUpdate(
+            {_id: req.user.id},
+            {$push: {library: book}},
+            {new: true})
+            .then(function(user) {
+                console.log("User after adding book: " + user);
+                res.redirect('/book/' + book);
+            });
+        // console.log("Seeing book in post router: " + req.body.book);
+        // console.log("User ID: " + req.user._id);
+    }
 });
 
 router.get('/book/:id', function(req, res) {
-    console.log("req.params.id: " + req.params.id);
+    // console.log("Book ID: " + req.params.id);
     Book.findById(req.params.id)
     .then(function(book) {
         const userOwns = req.isAuthenticated() ? 
         req.user.ownBook(req.params.id) : false;
         const showAddButton = req.user && !userOwns;
         book.farthestNote().then(function(note) {
-            console.log("Note: " + note);
+            // console.log("Note: " + note);
             res.render("book", populateVariables(req, {title: book.title, book: book, owned: userOwns, addButton: showAddButton}));
         });
     })
