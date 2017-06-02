@@ -55,7 +55,7 @@ UserSchema.methods.ownBookWithoutUserLibraryLoader = function(bookNumber) {
     // console.log("This: " + this);
     // console.log("Book Number: " + bookNumber);
     // console.log("This library: " + this.library);
-    return this.library.find(book => book.toString() === bookNumber);
+    return this.library.find(book => book.toString() === bookNumber.toString());
 };
 
 UserSchema.methods.validatePassword = function(password) {
