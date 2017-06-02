@@ -62,7 +62,7 @@ router.get('/book/:id', function(req, res) {
     Book.findById(req.params.id)
     .then(function(book) {
         const userOwns = req.isAuthenticated() ? 
-        req.user.ownBook(req.params.id) : false;
+        req.user.ownBookWithoutUserLibraryLoader(req.params.id) : false;
         const showAddButton = req.user && !userOwns;
         // probably want to use this code in a note router
         book.farthestNote().then(function(note) {
