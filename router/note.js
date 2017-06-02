@@ -37,7 +37,6 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
         console.log("Test: " + test);
         Note.find({book : req.book.id}).sort('-dateCreated')
         .then(function(note) {
-            req.flash('info', 'Welcome');
             res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
         });
     });   
@@ -66,6 +65,7 @@ router.post('/notes/:noteId/delete', authenticatedOnly, formParser, function(req
     let bookOfNote = "";
     Note.findByIdAndRemove(req.params.noteId)
     .then(function(note) {
+        req.flash('error', "Note deleted");
         res.redirect("/notes/" + note.book);
     });
 });
@@ -82,6 +82,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
         dateCreated: moment().format('MMMM Do YYYY, h:mm:ss a')
     })
     .then(note => {
+        req.flash("success", "Note created!");
         res.redirect('/notes/'+ note.book.id);
     })
     .catch(err => {
