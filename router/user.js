@@ -11,7 +11,7 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/', function(req, res) {
-    return res.render("hero", populateVariables(req, {}));
+    return res.render("hero", populateVariables(req, {gradient: true}));
 });
 
 router.get('/dashboard', authenticatedOnly, userLibraryLoader, function(req, res) {
