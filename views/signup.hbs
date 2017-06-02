@@ -1,17 +1,16 @@
 <!--Maybe I could use a modal sign up page?-->
 <form method="post" action="/signup">
-    <div class="container">
+    <div class="container form-group">
         <label>Email</label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input type="text" class="form-control" placeholder="Enter Email" name="email" required>
         <label>Username</label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
         <label>Password</label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" class="form-control" placeholder="Enter Password" name="psw" required>
         <label>Repeat Password</label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <input type="password" class="form-control" placeholder="Repeat Password" name="psw-repeat" required>
         <div class="clearfix">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn">Sign Up</button>
+            <button type="submit" class="btn signupbtn btn-primary">Sign Up!</button>
         </div>
     </div>
 </form>
