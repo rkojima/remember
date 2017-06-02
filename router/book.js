@@ -31,7 +31,8 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
             {new: true})
         .then(function(user) {
             console.log("User: " + user);
-            res.redirect('/book/' + book.id);
+            req.flash("success", "Book created!");
+            res.redirect('/dashboard');
         });
     });
 });
