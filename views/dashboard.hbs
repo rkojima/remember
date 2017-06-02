@@ -10,6 +10,9 @@
 <div class="container">
 
 <!-- This is very hacky, kinda for me to create a space by making  this element -->
+{{#unless books}}
+<p>No Books :(</p>
+{{/unless}}
 
 {{#each books}}
     <div class="book-box">
@@ -26,9 +29,8 @@
             <br>
     </div>
 {{/each}}
-{{#unless books}}
-<p>No Books :(</p>
-{{/unless}}
 </div>
+
+<a href="/create-book" id="book-button" class="btn btn-info">Add a book!</a>
 
 <!--TODO need logic for progress bar here, to get the amount of pages from database and do math --> 

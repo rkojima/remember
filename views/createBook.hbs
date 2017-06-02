@@ -1,12 +1,12 @@
 <form method="post" action="/create-book">
-    <div class="container">
+    <div class="container form-group">
         <label>Book</label>
-        <input type="text" placeholder="Add book" name="book" required>
+        <input type="text" class="form-control" placeholder="Add book" name="book" required>
         <label>Number of Pages</label>
-        <input type="number" placeholder="How many pages?" name="pages" required>
-        <div class="clearfix">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <button type="submit" class="submitbtn">Add</button>
+        <input type="number" class="form-control" placeholder="How many pages?" name="pages" required>
+        <div class="">
+            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add</button>
         </div>
     </div>
 </form>

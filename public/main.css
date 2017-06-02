@@ -92,3 +92,17 @@ textarea {
   width: 100%;
   max-width: 100%;
 }
+
+#book-button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+button {
+  margin-top: 10px;
+}
+
+label {
+  margin: 10px 0px 10px 0px;
+  font-size: 1.25em;
+}
