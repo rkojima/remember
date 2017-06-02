@@ -38,7 +38,7 @@ router.post('/create-book', authenticatedOnly, formParser, function(req, res) {
 
 router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
     // check if book hasn't been already added, look at userOwns = req.isAuthenticated
-    if (req.user.ownBook(req.body.book)) {
+    if (req.user.ownBookWithoutUserLibraryLoader(req.body.book)) {
         res.redirect('/book/' + req.body.book);
     } 
     else {

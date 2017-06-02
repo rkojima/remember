@@ -33,6 +33,9 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
         // TODO Set up alert here
     }
     //find book in library that matches book in Book db
+    console.log("Req.user: " + req.user);
+    console.log("Book to read: " + req.body["book-to-read"]);
+    console.log("Own Book? " + req.user.ownBook(req.body["book-to-read"]));
     if (req.user.ownBook(req.body["book-to-read"])) {
         Timer.create({
         user: req.user,
@@ -44,9 +47,7 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
     });
     } else {
         // TODO use Express flash
-        req.flash('error', 'Does not work');
         res.redirect('/timer/');
-       
     }
     // .then(function(timer) {
     // console.log(typeof moment()); moment is an object

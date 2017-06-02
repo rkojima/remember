@@ -46,6 +46,15 @@ UserSchema.methods.ownBook = function(bookNumber) {
     // console.log("This: " + this);
     // console.log("Book Number: " + bookNumber);
     // console.log("This library: " + this.library);
+    return this.library.find(book => book.id === bookNumber);
+};
+
+UserSchema.methods.ownBookWithoutUserLibraryLoader = function(bookNumber) {
+    // console.log(this.library);
+    // Can't do this.library.myBook.map b/c myBook is not an array nor is a property of library, so needs to be both to map
+    // console.log("This: " + this);
+    // console.log("Book Number: " + bookNumber);
+    // console.log("This library: " + this.library);
     return this.library.find(book => book.toString() === bookNumber);
 };
 

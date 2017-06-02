@@ -16,7 +16,7 @@ const formParser = bodyParser.urlencoded({extended: true});
 
 router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function(req, res) {    
     const userOwns = req.isAuthenticated() ? 
-    req.user.ownBook(req.params.bookId) : false;
+    req.user.ownBookWithoutUserLibraryLoader(req.params.bookId) : false;
     // Match note to book that has note
     console.log(req.book);
     // Sort might not work correctly (e.g. 5th vs 21st, 

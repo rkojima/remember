@@ -10,7 +10,7 @@
             <label for="bookToRead">Which book to read?</label>
             <select name="book-to-read" id="bookToRead" class="form-control">
             {{#each books}}
-                <option value="{{this.myBook.id}}">{{this.myBook.title}}</option>
+                <option value="{{this.id}}">{{this.title}}</option>
             {{/each}}
             </select>
         </div>    
