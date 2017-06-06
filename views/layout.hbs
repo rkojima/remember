@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/main.css">
     <link rel="stylesheet" href="/flipclock.css">
+    <link rel="stylesheet" href="/bootstrap-tour.min.css">
+
     <!--Either keep scripts here or below, so jquery script inside note.hbs and hamburger icon works-->
     <!--Decided not to use async here since it's too fluky-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
   <header class="header" {{#if gradient}}style="height: 100vh"{{/if}}>
@@ -69,11 +69,15 @@
 {{#if isAuthenticated}}
 <footer class="footer">
     <div class="container">
-      <a href="/timer" class="timer btn btn-primary">Start Reading Timer! 
+      <a href="/timer" class="timer btn btn-primary" id="timer-button">Start Reading Timer! 
         <span class="glyphicon glyphicon-time"></span>
       </a>
     </div>
 </footer>
 {{/if}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/bootstrap-tour.min.js"></script>
+<script src="/tour.js"></script>
 </body>
 </html>

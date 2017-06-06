@@ -111,7 +111,7 @@ textarea {
   width: 100%;
 }
 
-button {
+button, .cancel {
   margin-top: 10px;
 }
 

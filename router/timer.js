@@ -57,6 +57,10 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
     // });
 });
 
+router.get('/timer/example', function(req, res) {
+    res.render('exampleTimer', populateVariables(req, {layout: "layoutTimer.hbs"}));
+});
+
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
     // Need a checker when the timer has passed
     // Check when end time is actual time
@@ -68,6 +72,8 @@ router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res)
 
     });
 });
+
+
 
 // When countdown reaches 0, I want to redirect them to the notes page, with the option to write notes for whichever book they read. 
 // If they decide to stop the timer, then they should be directed to the notes page to write a note for however many books they have
