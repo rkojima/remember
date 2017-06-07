@@ -1,21 +1,26 @@
-<div class="your-clock" id="clock"></div>
-
+<div class="container">
+    <div class="my-clock" id="clock"></div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/flipclock.min.js"></script>
 
 <script type="text/javascript">
 
-    let clock = $('.your-clock').FlipClock({{time}}, {
+    let clock = $('.my-clock').FlipClock({{time}}, {
         autoStart: false,
         clockFace: 'MinuteCounter',
         countdown: true,
         callbacks: {
           interval: function() {
             console.log("Test");
-            let time = clock.getTime().time;
-            if (time <= 0) {
-                window.location.replace(`/notes/{{bookId}}?created=true`);
+            if (clock.getTime().time <= 0) {
+                clock.getTime().time = 0;
+                window.location.replace(`/notes/{{book}}?created=true`);
             }
+          },
+          stop: function() {
+            clock.getTime().time = 0;
+            window.location.replace(`/notes/{{book}}?created=true`);
           }
         }
     });
