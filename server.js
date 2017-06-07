@@ -13,6 +13,7 @@ const {router: bookRouter} = require('./router/book');
 const {router: userRouter} = require('./router/user');
 const {router: noteRouter} = require('./router/note');
 const {router: timerRouter} = require('./router/timer');
+const {router: demoRouter} = require('./router/demo');
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use(bookRouter);
 app.use(userRouter);
 app.use(noteRouter);
 app.use(timerRouter);
+app.use(demoRouter);
 
 
 // No need for hostname yet

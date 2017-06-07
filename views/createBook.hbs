@@ -5,8 +5,8 @@
         <label>Number of Pages</label>
         <input type="number" class="form-control" placeholder="How many pages?" name="pages" required>
         <div>
-            <a href="/dashboard" class="btn btn-default cancel">Cancel</a>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <a href="/dashboard" class="btn btn-default cancel {{#if demo}}disabled{{/if}}">Cancel</a>
+            <button type="submit" class="btn btn-primary {{#if demo}}disabled{{/if}}">Add</button>
         </div>
     </div>
 </form>

@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/main.css">
     <link rel="stylesheet" href="/flipclock.css">
+    <link rel="stylesheet" href="/bootstrap-tour.min.css">
+
+    {{!-- Make this NOT async or else jquery does not load and hamburger doesn't work --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
   <header>
@@ -50,12 +54,12 @@
     {{{body}}}
   </div>
 <footer class="footer">
-    <div class="container">
-      <a href="/notes/{{book}}?created=true" class="timer btn btn-danger" id="stop-timer">Stop Timer</a>
+    <div class="container" id="stop-timer">
+      <a href="/notes/{{book}}?created=true" class="timer btn btn-danger {{#if demo}}disabled{{/if}}" id="stop-timer">Stop Timer</a>
     </div>
 </footer>
 </body>
-  {{!-- Make this NOT async or else jquery does not load and hamburger doesn't work --}}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/bootstrap-tour.min.js"></script>
+  <script src="/tour.js"></script>
 </html>

@@ -57,10 +57,6 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
     // });
 });
 
-router.get('/timer/example', function(req, res) {
-    res.render('exampleTimer', populateVariables(req, {layout: "layoutTimer.hbs"}));
-});
-
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
     // Need a checker when the timer has passed
     // Check when end time is actual time

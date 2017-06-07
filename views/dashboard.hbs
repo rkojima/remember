@@ -13,7 +13,7 @@
 {{#unless books}}
 <p>No Books :(</p>
 {{/unless}}
-
+{{banana}}
 {{#each books}}
     <div class="book-box">
         <h3 class="book-name">{{this.title}}</h3>
@@ -24,13 +24,13 @@
                  </div>
             </div>
             <div class="col-xs-4">
-                <a href="/notes/{{this.id}}" id="{{this.id}}" class="book-notes btn btn-default btn-xs">Notes</a>
+                <a href="/notes/{{this.id}}" id="{{this.id}}" class="book-notes btn btn-default btn-xs{{#if demo}} disabled {{/if}}">Notes</a>
             </div>
             <br>
     </div>
 {{/each}}
 </div>
 
-<a href="/create-book" id="book-button" class="btn btn-info">Add a book!</a>
+<a href="/create-book" id="book-button" class="btn btn-info{{#if demo}} disabled {{/if}}">Add a book!</a>
 
 <!--TODO need logic for progress bar here, to get the amount of pages from database and do math --> 
