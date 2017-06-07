@@ -3,7 +3,8 @@ var tour = new Tour({
   {
     element: "#book-button",
     title: "Add a book!",
-    content: "Add a book into your library!",
+    content: "Add a book into your library by clicking this button.",
+    path: "/demo/dashboard",
     placement: "bottom"
   },
   {
@@ -13,7 +14,6 @@ var tour = new Tour({
     path: "/demo/create-book",
     placement: "bottom",
     reflex: true,
-    backdrop: true,
   },
   {
     element: "#timer-button",
@@ -64,4 +64,4 @@ var tour = new Tour({
 tour.init();
 
 // Start the tour
-tour.start(true);
+tour.start();

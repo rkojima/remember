@@ -27,10 +27,9 @@
       </div>  {{!-- /navbar-header  --}}
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
+          <li><a href="/demo/dashboard" id="demo-button">Demo Rememorari</a></li>
           {{#if isAuthenticated}}
           <li><a href="/create-book">Create Book</a></li>
-          <li><a href="/add-book">Add Book</a></li>
-          <li><a href="#">Profile</a></li>
           <li><a href="/logout">Log Out</a></li>
           {{else}}
           <li><a href="/login">Login</a></li>

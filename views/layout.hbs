@@ -11,7 +11,6 @@
     <!--Either keep scripts here or below, so jquery script inside note.hbs and hamburger icon works-->
     <!--Decided not to use async here since it's too fluky-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 </head>
 <body>
   <header class="header" {{#if gradient}}style="height: 100vh"{{/if}}>
@@ -32,9 +31,9 @@
         </div>  {{!-- /navbar-header  --}}
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="/demo/dashboard" id="demo-button">Demo Rememorari</a></li>
             {{#if isAuthenticated}}
             <li><a href="/create-book">Create Book</a></li>
-            <li><a href="#">Profile</a></li>
             <li><a href="/logout">Log Out</a></li>
             {{else}}
             <li><a href="/login">Login</a></li>
@@ -81,4 +80,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/bootstrap-tour.min.js"></script>
   <script src="/tour.js"></script>
+  <script type="text/javascript">
+    $('#demo-button').on('click', function() {
+      tour.restart();
+    });
+  </script>
 </html>
