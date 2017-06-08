@@ -8,7 +8,7 @@
   height: 100%;
 }
 
-.progress.col-xs-8 {
+.progress.col-xs-7 {
     padding-left: 0px;
     padding-right: 0px;
 }
@@ -83,10 +83,9 @@ body {
 
 .timer-box {
   margin-top: 30px;
-}
+  margin: auto;
+  width: 50%;
 
-.your-clock {
-  top: 50px;
 }
 
 .edit {
@@ -122,4 +121,24 @@ button.close {
 label {
   margin: 10px 0px 10px 0px;
   font-size: 1.25em;
+}
+
+.my-clock, .your-clock {
+  display: block;
+  width: auto;
+  top: 50px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+
+.progress {
+  text-align: center;
+}
+
+.progress-label {
+  position: absolute;
+  color: black; 
+  left: 0;
+  right: 0;
 }

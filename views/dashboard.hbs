@@ -17,14 +17,17 @@
 {{#each books}}
     <div class="book-box">
         <h3 class="book-name">{{this.title}}</h3>
-            <div class="progress col-xs-8">
-                 <div class="progress-bar" role="progressbar" aria-valuenow="{{this.percentage}}" 
-                 aria-valuemin="0" aria-valuemax="100" style="width:{{this.percentage}}%">
-                 <span>{{this.progress}} out of {{this.pages}} pages read!</span>
-                 </div>
+            <div class="progress col-xs-7">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{this.percentage}}" 
+                aria-valuemin="0" aria-valuemax="100" style="width:{{this.percentage}}%">
+                <span class="progress-label">{{this.progress}} out of {{this.pages}} pages</span>
+                </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-4 {{#if demo}}disabled{{/if}}">
                 <a href="/notes/{{this.id}}" id="{{this.id}}" class="book-notes btn btn-default btn-xs{{#if demo}} disabled {{/if}}">Notes</a>
+            </div>
+            <div class="">
+                <a href="/book/{{this.id}}/remove" class="close">&times;</a>
             </div>
             <br>
     </div>
