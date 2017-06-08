@@ -28,7 +28,7 @@
         </div>  {{!-- /navbar-header  --}}
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/demo/dashboard" id="demo-button">Demo Rememorari</a></li>
+            <li><a href="/demo/dashboard" class="demo-button">Demo Rememorari</a></li>
             {{#if isAuthenticated}}
             <li><a href="/create-book">Create Book</a></li>
             <li><a href="/logout">Log Out</a></li>
@@ -46,9 +46,9 @@
   </header>
   {{#if gradient}}
     <div class="spacer"></div>
-    <div class="gradient" style="height: 100vh">
-      <h1 id="hero-title-1">Rememorari</h1>
-      <h3 id="hero-text-1">So you don't go: "What did I just read?</h3>
+    <div class="gradient">
+      <h1 id="hero-title-1" class="hero-1">Rememorari</h1>
+      <h4 id="hero-text-1" class="hero-1 hero-text">So you don't go: "What did I just read?"</h4>
     </div>
   {{/if}}
   <div class="space"></div>
@@ -85,7 +85,7 @@
   <script src="/bootstrap-tour.min.js"></script>
   <script src="/tour.js"></script>
   <script type="text/javascript">
-    $('#demo-button').on('click', function() {
+    $('.demo-button').on('click', function() {
       tour.restart();
     });
   </script>

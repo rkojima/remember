@@ -1,7 +1,8 @@
 // A model
-
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+
+const {Note} = require('./note');
 
 mongoose.Promise = global.Promise;
 
@@ -60,6 +61,11 @@ UserSchema.methods.ownBookWithoutUserLibraryLoader = function(bookNumber) {
 
 UserSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.farthestNote = function(book) {
+    return Note.findOne({user: this, book: book})
+    .sort({endPage: -1});
 };
 
 const User = mongoose.model('User', UserSchema);
