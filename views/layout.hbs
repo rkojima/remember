@@ -13,11 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-  <header class="header" {{#if gradient}}style="height: 100vh"{{/if}}>
-  {{#if gradient}}
-  <div class="gradient">
-      <h1>So you don't go: "What did I just read?"</h1>
-  {{/if}}
+  <header class="header">
+
   {{!-- Need handlebars logic here when not authenticated --}}
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -43,10 +40,17 @@
         </div> {{!-- /myNavbar --}}
       </div> {{!-- /container --}}
     </nav>
-  {{#if gradient}}
-  </div> {{!-- /div for gradient --}}
-  {{/if}}
+{{!--   {{#if gradient}}
+  </div> /div for gradient
+  {{/if}} --}}
   </header>
+  {{#if gradient}}
+    <div class="spacer"></div>
+    <div class="gradient" style="height: 100vh">
+      <h1 id="hero-title-1">Rememorari</h1>
+      <h3 id="hero-text-1">So you don't go: "What did I just read?</h3>
+    </div>
+  {{/if}}
   <div class="space"></div>
   {{#each messages.error}}  
   <div class="alert alert-danger alert-dismissible show" role="alert">

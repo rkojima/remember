@@ -1,11 +1,29 @@
 .header {
   height: 0vh;
-  position: relative;
+}
+
+#hero-2 {
+  height: 100vh;
+}
+
+#hero-3 {
+  height: 100vh;
 }
 
 .gradient {
+  height: 100vh;
   background-image:linear-gradient(to right, #4facfe 0%, #00d7fe 100%);
-  height: 100%;
+}
+
+/*.spacer {
+  width: 100%;
+  height: 50px;
+}*/
+
+#hero-title-1 {
+  margin: 0px;
+  padding: 20px;
+  padding-top: 70px;
 }
 
 .progress.col-xs-7 {
