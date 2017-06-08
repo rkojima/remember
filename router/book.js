@@ -92,35 +92,6 @@ router.get('/book/:id/remove', authenticatedOnly, function(req, res) {
 });
 
 router.post('/book/:id/remove', authenticatedOnly, userLibraryLoader, function(req, res) {
-    // var removeIndex = req.user.library.map(function(item) { return item._id; })
-    //     .indexOf(req.params.id);
-    // console.log(req.user.library);
-    // if (removeIndex >= 0) { req.user.library.splice(removeIndex, 1); }
-    // console.log(req.user.library);
-    // res.send("Right here");
-    
-    // User.findById({_id: req.user._id})
-    // .then(function(user) {
-    //     console.log("User: " + user);
-    //     var index = user.library.indexOf(req.params.id);
-    //     console.log("Index: " + index);
-    //     if (index > -1) {
-    //         user.library.splice(index, 1);
-    //     }
-    //     // console.log("User: " + user);
-    //     req.user = user;        
-    // })
-    // .then(function() {
-    //     console.log("Req user: " + req.user);
-    //     req.flash("success", "Book has been removed");
-    //     res.redirect("/dashboard");
-    // });
-    
-    // User.find({_id: req.user._id})
-    // .then(user => {
-    //     console.log("USER: " + user);
-    // });
-
     User.update({_id: req.user._id}, { $pull: {library: req.params.id}})
     .then(function(user) {
         console.log("USER: " + req.user);

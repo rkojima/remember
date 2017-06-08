@@ -23,19 +23,25 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
     // 5th might be sorted higher in descending order when it shouldn't)
     Book.findById(req.params.bookId)
     .then(book => {
-        book.farthestNote()
+        req.user.farthestNote(book)
         .then(note => {
             console.log("This note: " + note);
             console.log("Book: " + book);
             console.log("Book progress: " + book.progress);
-            book.progress = note.endPage;
-            book.percentage = (100 * book.progress)/book.pages;
-            book.save();
+            if (note === null) {
+                book.progress = 0;
+                book.percentage = 0;
+                book.save();
+            } else {
+                book.progress = note.endPage;
+                book.percentage = (100 * book.progress)/book.pages;
+                book.save();
+            }
         });
     })
     .then(test => {
         console.log("Test: " + test);
-        Note.find({book : req.book.id}).sort('-dateCreated')
+        Note.find({book : req.book.id, user: req.user}).sort('-dateCreated')
         .then(function(note) {
             res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
         });
