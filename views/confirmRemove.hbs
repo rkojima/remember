@@ -1,0 +1,7 @@
+<p>Are you sure you want to remove this book from your library?</p>
+<div class="panel panel-default">
+    <p class="panel-body">{{book.title}}</p>
+</div>
+<form method="post" action="/book/{{book.id}}/remove">
+    <button class="btn btn-danger" type="submit">Confirm Removal</button>
+</form>

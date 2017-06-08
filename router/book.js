@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const {populateVariables, bookLoader} = require('./util');
+const {populateVariables, bookLoader, userLibraryLoader} = require('./util');
 const {Book} = require('../models/book');
 const {User} = require('../models/user');
 const {authenticatedOnly} = require('./authentication');
@@ -74,6 +74,58 @@ router.get('/book/:id', function(req, res) {
     .catch(function(err) {
         console.log(err);
         res.sendStatus(404);
+    });
+});
+
+// For removing books from user library
+router.get('/book/:id/remove', authenticatedOnly, function(req, res) {
+    Book.findById(req.params.id)
+        .then(function(book) {
+            req.book = book;
+            return book;
+        })
+        .then(function(book) {
+            console.log(req.book);
+            res.render("confirmRemove", populateVariables(req, {book: req.book}));
+        });
+    // res.render('confirmRemove', req, {book: });
+});
+
+router.post('/book/:id/remove', authenticatedOnly, userLibraryLoader, function(req, res) {
+    // var removeIndex = req.user.library.map(function(item) { return item._id; })
+    //     .indexOf(req.params.id);
+    // console.log(req.user.library);
+    // if (removeIndex >= 0) { req.user.library.splice(removeIndex, 1); }
+    // console.log(req.user.library);
+    // res.send("Right here");
+    
+    // User.findById({_id: req.user._id})
+    // .then(function(user) {
+    //     console.log("User: " + user);
+    //     var index = user.library.indexOf(req.params.id);
+    //     console.log("Index: " + index);
+    //     if (index > -1) {
+    //         user.library.splice(index, 1);
+    //     }
+    //     // console.log("User: " + user);
+    //     req.user = user;        
+    // })
+    // .then(function() {
+    //     console.log("Req user: " + req.user);
+    //     req.flash("success", "Book has been removed");
+    //     res.redirect("/dashboard");
+    // });
+    
+    // User.find({_id: req.user._id})
+    // .then(user => {
+    //     console.log("USER: " + user);
+    // });
+
+    User.update({_id: req.user._id}, { $pull: {library: req.params.id}})
+    .then(function(user) {
+        console.log("USER: " + req.user);
+        req.flash("success", "Book has been removed");
+        res.redirect("/dashboard");
     });
 });
 
