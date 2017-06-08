@@ -7,7 +7,8 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 
-const config = require('./config');
+// const config = require('./config');
+const {DATABASE_URL, PORT} = require('./config');
 const {router: authRouter} = require('./router/authentication');
 const {router: bookRouter} = require('./router/book');
 const {router: userRouter} = require('./router/user');
@@ -61,17 +62,63 @@ app.use(timerRouter);
 app.use(demoRouter);
 
 
-// No need for hostname yet
-mongoose.connect(config.DATABASE_URL, function(err) {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        app.listen(config.PORT, function() {
-            console.log(`Listening on ${config.PORT}`);
-        });
-    }
-});
+// // No need for hostname yet
+// mongoose.connect(config.DATABASE_URL, function(err) {
+//     if (err) {
+//         console.log(err);
+//     }
+//     else {
+//         app.listen(config.PORT, function() {
+//             console.log(`Listening on ${config.PORT}`);
+//         });
+//     }
+// });
+
+// closeServer needs access to a server object, but that only
+// gets created when `runServer` runs, so we declare `server` here
+// and then assign a value to it in run
+let server;
+
+// this function connects to our database, then starts the server
+function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(databaseUrl, err => {
+      if (err) {
+        return reject(err);
+      }
+      server = app.listen(port, () => {
+        console.log(`Your app is listening on port ${port}`);
+        resolve();
+      })
+      .on('error', err => {
+        mongoose.disconnect();
+        reject(err);
+      });
+    });
+  });
+}
+
+// this function closes the server, and returns a promise. we'll
+// use it in our integration tests later.
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+     return new Promise((resolve, reject) => {
+       console.log('Closing server');
+       server.close(err => {
+           if (err) {
+               return reject(err);
+           }
+           resolve();
+       });
+     });
+  });
+}
+
+// if server.js is called directly (aka, with `node server.js`), this block
+// runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+}
 
 // May need to add runServer and closeServer 
-module.exports = {app};
+module.exports = {runServer, app, closeServer};
