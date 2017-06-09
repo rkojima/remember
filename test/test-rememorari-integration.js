@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const should = chai.should();
+const expect = chai.expect();
 
 const {User} = require('../models/user');
 const {Book} = require('../models/book');
@@ -26,7 +27,8 @@ describe("Rememorari API", function() {
                 .get('/dashboard')
                 .then(function(_res) {
                     res = _res;
-                    res.header.location.should.include('/login');
+                    expect(res).to.redirect;
+                    expect(res).to.redirectTo('/login');
                 });
         });
     });
