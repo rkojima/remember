@@ -29,7 +29,7 @@ router.get('/demo/dashboard', function(req, res) {
     res.render('dashboard', populateVariables(req, {books: [demoBook]}));
 });
 
-router.get('/demo/create-book', authenticatedOnly, function(req, res) {
+router.get('/demo/create-book', function(req, res) {
     res.render('createBook', populateVariables(req, {title: "Create a book for your library!"}));
 });
 

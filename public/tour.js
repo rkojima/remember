@@ -54,9 +54,9 @@ var tour = new Tour({
   },
   {
     title: "That's it!",
-    content: "You can always view the demo by clicking on the link in the sandwich icon in the upper right corner.",
+    content: "You can always view the demo by clicking on the link in the sandwich icon in the upper right corner. Click on 'Rememorari' on the top left corner to get started.",
     orphan: true,
-    path: "/dashboard",
+    path: "/demo/dashboard",
   }
 ]});
 
