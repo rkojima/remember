@@ -66,7 +66,8 @@ router.post('/signup', formParser, function(req, res) {
 // A route when logging in
 const loginMiddleware = passport.authenticate('local', {
         successRedirect: '/dashboard',
-        failureRedirect: '/login'
+        failureRedirect: '/login',
+        failureFlash: 'Invalid username or password.'
     });
 
 router.get('/signup', function(req, res) {
