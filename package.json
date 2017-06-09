@@ -4,8 +4,9 @@
   "description": "An app for readers to read and journal about their readings",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "mocha"
+    "start": "node server.js",
+    "test": "mocha",
+    "develop": "nodemon server.js"
   },
   "repository": {
     "type": "git",
