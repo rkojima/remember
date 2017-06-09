@@ -1,3 +1,4 @@
+// Book model
 const mongoose = require('mongoose');
 const {Note} = require('./note');
 
@@ -19,8 +20,6 @@ const BookSchema = mongoose.Schema({
     percentage: {
         type: Number,
     }
-    //TODO add book image to schema
-
 });
 
 BookSchema.methods.farthestNote = function() {
