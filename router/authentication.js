@@ -10,27 +10,6 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 // Before using passport, configure strategy first
-
-/*const basicStrategy = new BasicStrategy (function(username, password, done) {
-    // What it's taking in is wrong
-    // Something about the cache holding onto the previous username and password
-    User.findOne({ username: username }, function (err, user) {
-    console.log(`Username: ${username}, Password: ${password}`);
-    if (err) {
-        return done(err);
-    }
-    if (!user) { 
-        return done(null, false, {message: 'Incorrect username'});
-    }
-    if (!user.validatePassword(password)) {
-        return done(null, false, {message: 'Incorrect password'}); 
-    }
-      return done(null, user);
-    });
-});
-passport.use(basicStrategy);
-*/
-
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'psw'
@@ -68,7 +47,7 @@ router.post('/signup', formParser, function(req, res) {
     User.create({
         email: req.body.email,
         username: req.body.username,
-        password: req.body.psw, // TODO change to hash
+        password: req.body.psw,
     })
     .then(function(user) {
         res.json(`User ${user.id} created.`);
@@ -86,7 +65,7 @@ router.post('/signup', formParser, function(req, res) {
 
 // A route when logging in
 const loginMiddleware = passport.authenticate('local', {
-        successRedirect: '/dashboard', // TODO change this to dashboard
+        successRedirect: '/dashboard',
         failureRedirect: '/login'
     });
 
@@ -113,24 +92,12 @@ const authenticatedOnly = (req, res, next) => {
     }
 };
 
-// Menu, where they see their books and notes
-// Probably want this in its own router
-// router.get('/dashboard', authenticatedOnly, function(req, res) {
-//     // res.json({library: req.user.library});
-//     let libraryArray;
-//     req.user.library.forEach(function(book) {
-//         // mongoDB right here
-//         libraryArray += Book.findById(book);
-//     });
-//     res.json({library: libraryArray});
-// });
-
 router.get('/logout', function(req, res) {
     console.log("Logging Out.");
     req.logOut();
     req.session.destroy(function() {
         res.clearCookie('connect.sid');
-        res.redirect('/'); // Placeholder for now
+        res.redirect('/');
     });
 });
 

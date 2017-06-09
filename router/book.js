@@ -53,8 +53,6 @@ router.post('/add-book', authenticatedOnly, formParser, function(req,res) {
                 console.log("User after adding book: " + user);
                 res.redirect('/book/' + book);
             });
-        // console.log("Seeing book in post router: " + req.body.book);
-        // console.log("User ID: " + req.user._id);
     }
 });
 
@@ -88,7 +86,6 @@ router.get('/book/:id/remove', authenticatedOnly, function(req, res) {
             console.log(req.book);
             res.render("confirmRemove", populateVariables(req, {book: req.book}));
         });
-    // res.render('confirmRemove', req, {book: });
 });
 
 router.post('/book/:id/remove', authenticatedOnly, userLibraryLoader, function(req, res) {
@@ -99,15 +96,5 @@ router.post('/book/:id/remove', authenticatedOnly, userLibraryLoader, function(r
         res.redirect("/dashboard");
     });
 });
-
-// Helper function to input user library and output "mongoose.Types.ObjectId" + ID of book
-// NO NEED FOR THIS ANYMORE, KEEPING JUST TO LOOK AT
-// function idToObject(libArray) {
-//     let readyId = libArray.map(function(book){
-//         return mongoose.Types.ObjectId(book.myBook);
-//     });
-//     console.log(readyId);
-//     return readyId;
-// }
 
 module.exports = {router, populateVariables};

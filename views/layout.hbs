@@ -8,14 +8,11 @@
     <link rel="stylesheet" href="/flipclock.css">
     <link rel="stylesheet" href="/bootstrap-tour.min.css">
 
-    <!--Either keep scripts here or below, so jquery script inside note.hbs and hamburger icon works-->
-    <!--Decided not to use async here since it's too fluky-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
   <header class="header">
 
-  {{!-- Need handlebars logic here when not authenticated --}}
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -40,9 +37,6 @@
         </div> {{!-- /myNavbar --}}
       </div> {{!-- /container --}}
     </nav>
-{{!--   {{#if gradient}}
-  </div> /div for gradient
-  {{/if}} --}}
   </header>
   {{#if gradient}}
     <div class="spacer"></div>

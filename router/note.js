@@ -18,16 +18,12 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
     const userOwns = req.isAuthenticated() ? 
     req.user.ownBookWithoutUserLibraryLoader(req.params.bookId) : false;
     // Match note to book that has note
-    console.log(req.book);
     // Sort might not work correctly (e.g. 5th vs 21st, 
     // 5th might be sorted higher in descending order when it shouldn't)
     Book.findById(req.params.bookId)
     .then(book => {
         req.user.farthestNote(book)
         .then(note => {
-            console.log("This note: " + note);
-            console.log("Book: " + book);
-            console.log("Book progress: " + book.progress);
             if (note === null) {
                 book.progress = 0;
                 book.percentage = 0;
@@ -40,7 +36,6 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
         });
     })
     .then(test => {
-        console.log("Test: " + test);
         Note.find({book : req.book.id, user: req.user}).sort('-dateCreated')
         .then(function(note) {
             res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
@@ -65,7 +60,6 @@ function emptyContent(req, res, next) {
 
 // TODO delete route to delete note, redirect to note page
 router.post('/notes/:noteId/delete', authenticatedOnly, formParser, function(req, res) {
-    console.log("post operation");
     // Find ID of book, then delete note, then redirect to page of note for book
     // Check which page user read up to, then check whether that's larger than user's previous number
     let bookOfNote = "";
@@ -77,9 +71,7 @@ router.post('/notes/:noteId/delete', authenticatedOnly, formParser, function(req
 });
 
 router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyContent, function(req, res) {
-    // console.log(req.body);
     // Then put book in note so that it could be referenced, possibly by populate
-    console.log(req.book);
     Note.create({
         book: req.book,
         user: req.user,

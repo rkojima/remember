@@ -18,24 +18,15 @@ router.get('/timer', authenticatedOnly, formParser, userLibraryLoader, function(
     //then I should be able to get user's library
     //then populate it with books from library
     //then get book titles from the book
-
-    // console.log("Get router: " + req.user);
-    // console.log("User: " + req.user);
-    // console.log("Library: " + req.user.library);
     res.render('timer', populateVariables(req, {books: req.user.library}));
 });
 
 router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function(req, res) {
-    // TODO: check for if minutes is null or nothing was entered
     if (req.body.minutes < 1 || req.body.minutes === null) {
         req.flash('error', 'Please enter a positive integer!');
         res.redirect('/timer');
-        // TODO Set up alert here
     }
     //find book in library that matches book in Book db
-    console.log("Req.user: " + req.user);
-    console.log("Book to read: " + req.body["book-to-read"]);
-    console.log("Own Book? " + req.user.ownBook(req.body["book-to-read"]));
     if (req.user.ownBook(req.body["book-to-read"])) {
         Timer.create({
         user: req.user,
@@ -46,15 +37,8 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
         res.redirect('/timer/' + timer.id);
     });
     } else {
-        // TODO use Express flash
         res.redirect('/timer/');
     }
-    // .then(function(timer) {
-    // console.log(typeof moment()); moment is an object
-    //     console.log(timer);
-    // res.send("This got to here");
-    // res.redirect('/timer/' + timer.id);
-    // });
 });
 
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
@@ -68,8 +52,6 @@ router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res)
 
     });
 });
-
-
 
 // When countdown reaches 0, I want to redirect them to the notes page, with the option to write notes for whichever book they read. 
 // If they decide to stop the timer, then they should be directed to the notes page to write a note for however many books they have
