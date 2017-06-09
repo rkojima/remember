@@ -21,13 +21,5 @@ describe("Rememorari API", function() {
                     res.should.have.status(200);
                 });
         });
-        it("should redirect me to the login page if not signed in", function() {
-            return chai.request(app)
-                .get('/dashboard')
-                .then(function(_res) {
-                    res = _res;
-                    res.header['location'].should.include('/login');
-                });
-        });
     });
 });
