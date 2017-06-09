@@ -7,16 +7,16 @@
   text-align: center;
 }
 
+.signup-login-text {
+  margin-top: 30px;
+  text-align: center;
+}
+
 .gradient {
   height: 50vh;
   background-image:linear-gradient(to right, #4facfe 0%, #00d7fe 100%);
   text-align: center;
 }
-
-/*.spacer {
-  width: 100%;
-  height: 50px;
-}*/
 
 .hero-1 {
   padding-top: 12.5vh;
@@ -29,6 +29,15 @@
 
 .hero-button {
   margin-top: 20px;
+}
+
+.form-group {
+  width: 300px;
+}
+
+.sign-log-btn {
+  margin-top: 30px;
+  width: 100%;
 }
 
 .progress.col-xs-7 {
@@ -55,11 +64,6 @@ input.pages {
     overflow: auto;
 }
 
-.body-margin {
-    margin-right: 15px;
-    margin-left: 15px;
-}
-
 #note-button {
     margin-bottom: 15px;
 }
@@ -81,9 +85,8 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 50px;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 60px;
   background-color: #f5f5f5;
   left: 0px;
   right: 0px;
