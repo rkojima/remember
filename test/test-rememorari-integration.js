@@ -26,7 +26,7 @@ describe("Rememorari API", function() {
                 .get('/dashboard')
                 .then(function(_res) {
                     res = _res;
-                    res.should.have.redirect('/login');
+                    res.header.location.should.include('/login');
                 });
         });
     });
