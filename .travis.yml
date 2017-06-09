@@ -1,4 +1,11 @@
 language: node_js
 node_js: node
 services:
-- mongodb 
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: D8LuLIjAXPk5wC6Ox0d9JKSlAMi/s7fKjZ2fiJPyOBBZu8f08IlKaPkrjeVk+wA6csMqeF/Iuc8QAxLg2HRqkYetBDEpDb6RzJJAVEnjYcLe5xqRPnZzNFRgFgeUBFmdKc3DOaB/06dDptZMpKEJjtWWo/XXZGbbADkQ6MFPsHPq3hoytvsiRP9X2pXZ6ntAw1gfPB33Iwu99Jsp2WpLETjPuj0IqdBql+iPhwF3xutw+HrXDk0RDJ6fQCrFwjKYm8CbT6k5UrnKDoDg/OKnZ302p3dSRpzp9Wv6stwK2NCCNwiu/08LOrZ9XtCWmhH7sTOPPxliWxPHfXGCpOslIU4mVn3b0q+fqhJ988gyU8V8rHQrdavXZx7ZKEKnJSHC8/tPaW0/GWY0kGR3h+ZpP7MKnKxq1H0sNQzp+zx6VDusePMaQGP4c8fDypVO20ECLJ9KntDMkTiNLakdZOIm3pms5so/Hqvu5+i9HrBDVg5fZtJJqOaar3kRZ3d+9xDSoWDr5DfYsjlF6S1EqrX1tIZzprTnSR5ZwsA4GJXI8E75twRh2TUautU8OacDrdMbcBtNU/B3MhQQoYjcEq7KdvZcesgX1dVN05GnxUUuktEJ8RVHyF1jT42MevmT6DhyygLtcLNKi98WymdxumxbrGjDYzx35A4I9zMJ3QBq1IQ=
+  app: murmuring-shore-62799
+  on:
+    repo: rkojima/rememorari
