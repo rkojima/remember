@@ -1,5 +1,14 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 .header {
   height: 0vh;
+}
+
+body {
+  width: 90%;
+  margin: auto;
 }
 
 .hero {
@@ -109,6 +118,7 @@ body {
 }
 
 .timer-box {
+  display: flex;
   margin-top: 30px;
   margin: auto;
   width: 50%;
@@ -134,7 +144,9 @@ textarea {
 
 #book-button {
   margin-top: 10px;
-  width: 100%;
+  width: 300px;
+  display: block;
+  margin: auto;
 }
 
 button, .cancel {
@@ -168,6 +180,11 @@ label {
   color: black; 
   left: 0;
   right: 0;
+}
+
+#stop-timer {
+  width: 300px;
+  margin: auto;
 }
 
 @media (min-width: 687px) {
