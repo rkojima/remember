@@ -3,7 +3,6 @@
 }
 
 .hero {
-  height: 50vh;
   text-align: center;
 }
 
@@ -14,12 +13,14 @@
 
 .gradient {
   height: 50vh;
-  background-image:linear-gradient(to right, #4facfe 0%, #00d7fe 100%);
   text-align: center;
+  background-image: url('./images/notebook-mobile.jpg');
+  background-size: cover;
 }
 
 .hero-1 {
   padding-top: 12.5vh;
+  color: white;
 }
 
 .hero-text {
@@ -167,4 +168,10 @@ label {
   color: black; 
   left: 0;
   right: 0;
+}
+
+@media (min-width: 687px) {
+  .gradient {
+    background-image: url(./images/fantasy_books.jpg);
+  }
 }
