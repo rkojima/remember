@@ -161,14 +161,14 @@ label {
   font-size: 1.25em;
 }
 
-.my-clock, .your-clock {
+/*.my-clock, .your-clock {
   display: block;
   width: auto;
   top: 50px;
   display: flex;
   position: relative;
   justify-content: center;
-}
+}*/
 
 .progress {
   text-align: center;

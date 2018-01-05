@@ -1,29 +1,82 @@
 <div class="container">
-    <div class="my-clock" id="clock"></div>
+    <div class="my-clock" id="clock">
+        <div>
+            <span class="hours"></span>
+            <p>Hours</p>
+        </div>
+        <div>
+            <span class="minutes"></span>
+            <p>Minutes</p>
+        </div>
+        <div>
+            <span class="seconds"></span>
+            <p>Seconds</p>
+        </div>
+        
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/flipclock.min.js"></script>
 
 <script type="text/javascript">
 
-    let clock = $('.my-clock').FlipClock({{time}}, {
-        autoStart: false,
-        clockFace: 'MinuteCounter',
-        countdown: true,
-        callbacks: {
-          interval: function() {
-            console.log("Test");
-            if (clock.getTime().time <= 0) {
-                clock.getTime().time = 0;
+        //alternative countdown timer
+    function getTimeRemaining(endtime) {
+        let t = Date.parse(endtime) - Date.parse(new Date());
+        let seconds = Math.floor((t/1000) % 60);
+        let minutes = Math.floor((t/1000/60) % 60);
+        let hours = Math.floor((t/(1000*60*60)) % 24);
+        let days = Math.floor(t/(1000*60*60*24));
+        return {
+            'total': t, 
+            'days': days, 
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        let altClock = document.getElementById(id);
+        let hoursSpan = clock.querySelector('.hours');
+        let minutesSpan = clock.querySelector('.minutes');
+        let secondsSpan = clock.querySelector('.seconds');
+        updateClock();
+        let timeinterval = setInterval(updateClock, 1000);
+
+    function updateClock() {
+        let t = getTimeRemaining(endtime);
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
                 window.location.replace(`/notes/{{book}}?created=true`);
             }
-          },
-          stop: function() {
-            clock.getTime().time = 0;
-            window.location.replace(`/notes/{{book}}?created=true`);
-          }
-        }
-    });
-    clock.start();
+        }; 
+    }
+
+    initializeClock('clock', `{{endTime}}`);
+
+    // let clock = $('.my-clock').FlipClock({{time}}, {
+    //     autoStart: false,
+    //     clockFace: 'MinuteCounter',
+    //     countdown: true,
+    //     callbacks: {
+    //       interval: function() {
+    //         console.log("Test");
+    //         if (clock.getTime().time <= 0) {
+    //             clock.getTime().time = 0;
+    //             window.location.replace(`/notes/{{book}}?created=true`);
+    //         }
+    //       },
+    //       stop: function() {
+    //         clock.getTime().time = 0;
+    //         window.location.replace(`/notes/{{book}}?created=true`);
+    //       }
+    //     }
+    // });
+    // console.log(altCountTimer)
+    // clock.start();
     
 </script>

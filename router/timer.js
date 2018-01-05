@@ -27,11 +27,14 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
         res.redirect('/timer');
     }
     //find book in library that matches book in Book db
+    console.log(moment().add(req.body.minutes, 'm'));
     if (req.user.ownBook(req.body["book-to-read"])) {
+        let endTime = moment().add(req.body.minutes, 'm');
         Timer.create({
         user: req.user,
         book: req.body["book-to-read"],
-        endTime: moment().add(req.body.minutes, "m").unix(),
+        endTimeUnix: endTime.unix(),
+        endTimeString: endTime.toISOString(),
     })
     .then(timer => {
         res.redirect('/timer/' + timer.id);
@@ -44,12 +47,17 @@ router.post('/timer', authenticatedOnly, formParser, userLibraryLoader, function
 router.get('/timer/:timerId', authenticatedOnly, timerLoader, function(req, res) {
     // Need a checker when the timer has passed
     // Check when end time is actual time
-    let readingSeconds = req.timer.endTime - moment().unix();
+    console.log(req.timer.endTimeString);
+    let readingSeconds = req.timer.endTimeUnix - moment().unix();
     Timer.findOne({_id: req.params.timerId})
     .then(timer => {
         console.log("Book: " + timer.book);
-        res.render('countdownTimer', populateVariables(req, {time: readingSeconds, book: timer.book, layout: "layoutTimer.hbs"}));
-
+        res.render('countdownTimer', populateVariables(req, {
+            time: readingSeconds, 
+            book: timer.book, 
+            endTime: req.timer.endTimeString, 
+            layout: "layoutTimer.hbs"
+        }));
     });
 });
 

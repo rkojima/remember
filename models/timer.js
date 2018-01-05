@@ -11,10 +11,14 @@ const TimerSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    endTime: {
+    endTimeUnix: {
         type: Number,
         required: true
     },
+    endTimeString: {
+        type: String, 
+        required: true
+    }
 });
 
 const Timer = mongoose.model('Timer', TimerSchema);
