@@ -18,6 +18,10 @@ router.use(function(req, res, next) {
     next();
 });
 
+router.get('/demo/login', function(req, res) {
+    res.render('index', populateVariables(req, {demo: "value='demo'"}));
+})
+
 router.get('/demo/dashboard', function(req, res) {
     let demoBook = {
         id: "demo-book",
