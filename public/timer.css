@@ -1,3 +1,7 @@
+.input-group {
+    margin: auto;
+}
+
 #clock {
     color: white;
     text-align: center;
@@ -5,18 +9,20 @@
     margin-top: 50px;
     width: auto;
     justify-content: center;
+    font-size: 30px;
 }
 
 #clock > div {
     margin: 5px;
     background: #94BFCD;
     border-radius: 3px;
-    padding: 5px;
+    padding: 10px;
     display: inline-block;
+    width: 100px;
 }
 
 #clock div > span {
-    padding: 1em;
+    padding: 15px;
     border-radius: 3px;
     background: lightblue;
     display: inline-block;
@@ -25,4 +31,6 @@
 #clock div > p {
     text-align: center;
     margin: .5em;
+    font-size: 16px;
 }
+
