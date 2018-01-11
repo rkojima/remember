@@ -10,6 +10,7 @@ const router = express.Router();
 const formParser = bodyParser.urlencoded({extended: true});
 
 // Before using passport, configure strategy first
+//Login strategy
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'psw'
@@ -18,10 +19,26 @@ function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
         if (err) { return done(err); }
         if (!user) {
-            return done(null, false, {message: 'Incorrect username.' });
-         }
-          if (!user.validatePassword(password)) {
-            return done(null, false, {message: 'Incorrect password.' });
+            return done(null, false, {message: 'Invalid username or password.' });
+        }
+        if (!user.validatePassword(password)) {
+            return done(null, false, {message: 'Invalid username or password.' });
+        }
+        return done(null, user);
+    });
+  }
+));
+
+//Signup strategy
+passport.use(`signup`, new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'psw',
+},
+function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+        if (err) { return done(err); }
+        if (user) {
+            return done(null, false, {message: `There's already a user with that name.` });
         }
         return done(null, user);
     });
@@ -43,14 +60,13 @@ router.post('/signup', formParser, function(req, res) {
     if(req.body.psw != req.body['psw-repeat']) {
         return res.send("Passwords do not match");
     }
-
     User.create({
         email: req.body.email,
         username: req.body.username,
         password: req.body.psw,
     })
     .then(function(user) {
-        res.json(`User ${user.id} created.`);
+        res.redirect('/dashboard');
     }) 
     .catch(function(err) {
         if (err.code === 11000) {
@@ -67,7 +83,7 @@ router.post('/signup', formParser, function(req, res) {
 const loginMiddleware = passport.authenticate('local', {
         successRedirect: '/dashboard',
         failureRedirect: '/login',
-        failureFlash: 'Invalid username or password.'
+        failureFlash: true
     });
 
 router.get('/signup', function(req, res) {
@@ -95,6 +111,31 @@ const authenticatedOnly = (req, res, next) => {
 
 router.get('/logout', function(req, res) {
     console.log("Logging Out.");
+    
+    // console.log(req.user);
+    // User.findOne({username: "demo"}).
+    // populate('library').
+    // exec(function(err, user) {
+    //     if (err) return handleError(err);
+    //     user.library = [
+    //         { 
+    //             title: 'Demo Book',
+    //             pages: 1234,
+    //             progress: 0,
+    //             percentage: 0,
+    //         }
+    //     ];
+    //     user.save();
+    // });
+
+    // if (req.user.username === "demo") {
+    //     User.update(
+    //         {username: 'demo'}, 
+    //         {$set: {
+    //             library: [{}]
+    //         }}
+    //     )
+    // }
     req.logOut();
     req.session.destroy(function() {
         res.clearCookie('connect.sid');
