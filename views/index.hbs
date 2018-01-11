@@ -1,12 +1,15 @@
 <form method="post" action="/login">
     <div class="container form-group">
         <label>Username</label>
-        <input type="text" class="form-control" placeholder="Username" name="username" required>
+        <input type="text" class="form-control" {{{demo}}} placeholder="Username" name="username" required>
         <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="psw" required>
+        <input type="password" class="form-control" {{{demo}}} placeholder="Password" name="psw" required>
         <div class="clearfix">
             <button type="submit" class="btn sign-log-btn btn-primary">Login!</button>
         </div>
+        {{#if demo}}
+            <h5>Use the demo username and password to test out Remember!</h5>
+        {{/if}}
         <p class="signup-login-text">Not yet a user? <a href="/signup">Sign Up Here!</a></p>
     </div>
 </form>
