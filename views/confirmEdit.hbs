@@ -1,6 +1,9 @@
-<p>Edit this note</p>
+<div class="confirm">
+    <p>Edit this note</p>
 
-<form method="post" action="/notes/{{note.id}}/edit">
-    <textarea name="content">{{note.content}}</textarea>
-    <button class="btn btn-info" type="submit">Confirm Edit</button>
-</form>
+    <form method="post" action="/notes/{{note.id}}/edit">
+        <textarea name="content">{{note.content}}</textarea>
+        <button class="btn btn-info" type="submit">Confirm Edit</button>
+        <button class="btn btn-default" type="button" onclick="history.back(-1)"> Cancel </button>
+    </form>
+</div>

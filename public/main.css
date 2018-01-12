@@ -180,6 +180,11 @@ label {
   margin: auto;
 }
 
+.confirm {
+  width: 90%;
+  margin: auto;
+}
+
 @media (min-width: 687px) {
   .gradient {
     background-image: url(./images/fantasy_books.jpg);

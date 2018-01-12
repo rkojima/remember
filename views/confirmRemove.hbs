@@ -1,7 +1,10 @@
-<p>Are you sure you want to remove this book from your library? You won't be able to retrieve notes for that book anymore.</p>
-<div class="panel panel-default">
-    <p class="panel-body">{{book.title}}</p>
+<div class="confirm">
+    <p>Are you sure you want to remove this book from your library? You won't be able to retrieve notes for that book anymore.</p>
+    <div class="panel panel-default">
+        <p class="panel-body">{{book.title}}</p>
+    </div>
+    <form method="post" action="/book/{{book.id}}/remove">
+        <button class="btn btn-danger" type="submit">Confirm Removal</button>
+        <button class="btn btn-default" type="button" onclick="history.back(-1)"> Cancel </button>
+    </form>
 </div>
-<form method="post" action="/book/{{book.id}}/remove">
-    <button class="btn btn-danger" type="submit">Confirm Removal</button>
-</form>
