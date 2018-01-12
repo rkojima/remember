@@ -111,31 +111,11 @@ const authenticatedOnly = (req, res, next) => {
 
 router.get('/logout', function(req, res) {
     console.log("Logging Out.");
-    
-    // console.log(req.user);
-    // User.findOne({username: "demo"}).
-    // populate('library').
-    // exec(function(err, user) {
-    //     if (err) return handleError(err);
-    //     user.library = [
-    //         { 
-    //             title: 'Demo Book',
-    //             pages: 1234,
-    //             progress: 0,
-    //             percentage: 0,
-    //         }
-    //     ];
-    //     user.save();
-    // });
-
-    // if (req.user.username === "demo") {
-    //     User.update(
-    //         {username: 'demo'}, 
-    //         {$set: {
-    //             library: [{}]
-    //         }}
-    //     )
-    // }
+    if (req.user.username === "demo") {
+        User.findOneAndUpdate({username: "demo"}, {library: []}, function(err, user) {
+        if (err) return res.send(500, { error: err });
+    });
+    };
     req.logOut();
     req.session.destroy(function() {
         res.clearCookie('connect.sid');
