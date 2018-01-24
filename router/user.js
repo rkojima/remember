@@ -14,13 +14,13 @@ router.get('/', function(req, res) {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     } else {
-       return res.render("hero", populateVariables(req, {gradient: true}));
+       return res.render("hero", populateVariables(req, {gradient: true, title: "Try out Remember!"}));
     }
 });
 
 router.get('/dashboard', authenticatedOnly, userLibraryLoader, function(req, res) {
     // For each book, get the farthest page number and show that for the progress bar
-    res.render("dashboard", populateVariables(req, {books: req.user.library, username: req.user.username}));
+    res.render("dashboard", populateVariables(req, {books: req.user.library, username: req.user.username, title: "The Library"}));
     /*
     With JSON file, I know that I have info now from library
     For each book in library, render so that book title and number of pages read are shown

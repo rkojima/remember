@@ -38,7 +38,7 @@ router.get('/notes/:bookId', authenticatedOnly, formParser, bookLoader, function
     .then(test => {
         Note.find({book : req.book.id, user: req.user}).sort('-dateCreated')
         .then(function(note) {
-            res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note}));
+            res.render("note", populateVariables(req, {bookName: req.book.title, owned: userOwns, note: note, title: "Notes"}));
         });
     });   
 });
@@ -93,7 +93,7 @@ router.post('/notes/:bookId', authenticatedOnly, formParser, bookLoader, emptyCo
 router.get('/notes/:noteId/edit', authenticatedOnly, function(req, res) {
     Note.findById({_id: req.params.noteId})
     .then(note => {
-        res.render('confirmEdit', populateVariables(req, {note: note}));
+        res.render('confirmEdit', populateVariables(req, {note: note, title: "Edit Notes"}));
     });
     
 });

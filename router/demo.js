@@ -19,7 +19,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/demo/login', function(req, res) {
-    res.render('index', populateVariables(req, {demo: "value='demo'"}));
+    res.render('index', populateVariables(req, {demo: "value='demo'", title: "Remember Demo"}));
 })
 
 router.get('/demo/dashboard', function(req, res) {
